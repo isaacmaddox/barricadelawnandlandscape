@@ -5,4 +5,5 @@
   force = true
   from = "/*"
   status = 200
+  included_files=["/views/*.pug"]
   to = "/.netlify/functions/index/:splat"
