@@ -1,9 +1,9 @@
 [functions]
   external_node_modules = ["express", "csurf", "cookie-parser", "serverless-http", "pug"]
   node_bundler = "esbuild"
+  included_files=["/views/*.pug"]
 [[redirects]]
   force = true
   from = "/*"
   status = 200
-  included_files=["/views/*.pug"]
   to = "/.netlify/functions/index/:splat"
