@@ -1,6 +1,7 @@
 const express = require('express');
 const csrf = require('csurf');
 const cookieParser = require('cookie-parser');
+const serverless = require('serverless-http');
 
 const app = express();
 app.set('view engine', 'pug');
@@ -16,3 +17,5 @@ app.get('/', csrfProtection, (req, res) => {
 app.listen(3000, () => {
     console.log('listening on port 3000');
 });
+
+export const handler = serverless(app);
