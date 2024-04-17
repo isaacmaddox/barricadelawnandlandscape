@@ -14,8 +14,6 @@ app.get('/', csrfProtection, (req, res) => {
     res.render('form', { csrfToken: req.csrfToken() });
 })
 
-app.listen(3000, () => {
-    console.log('listening on port 3000');
-});
+app.use('/');
 
 export const handler = serverless(app);
