@@ -7,7 +7,7 @@ const serverless = require('serverless-http');
 
 const app = express();
 app.set('view engine', 'pug');
-app.set('views', 'views');
+app.set('views', './netlify/functions/views');
 
 const router = Router();
 
