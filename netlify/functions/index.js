@@ -4,11 +4,10 @@ const express = require('express');
 const csrf = require('csurf');
 const cookieParser = require('cookie-parser');
 const serverless = require('serverless-http');
-const path = require('path');
 
 const app = express();
 app.set('view engine', 'pug');
-app.set('views', path.join(process.cwd(), '/views'));
+app.set('views', './views');
 
 const router = Router();
 
