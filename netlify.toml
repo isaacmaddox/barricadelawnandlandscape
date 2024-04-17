@@ -1,6 +1,7 @@
 [functions]
   external_node_modules = ["express", "csurf", "cookie-parser", "serverless-http", "ejs"]
   node_bundler = "esbuild"
+  included_files = ["page_views/*"]
 [[redirects]]
   force = true
   from = "/*"
