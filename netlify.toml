@@ -1,5 +1,5 @@
 [functions]
-  external_node_modules = ["express", "csurf", "cookie-parser", "serverless-http"]
+  external_node_modules = ["express", "csurf", "cookie-parser", "serverless-http", "pug"]
   node_bundler = "esbuild"
 [[redirects]]
   force = true
