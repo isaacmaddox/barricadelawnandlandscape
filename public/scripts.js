@@ -1,8 +1,11 @@
 let imageCarousel;
+let errorCount = 0;
 
 const onPageLoad = () => {
     const quoteForm = document.querySelector('form');
     const submitButton = document.querySelector('form button[type="submit"]');
+    const errorText = document.getElementById('error-text');
+    const thankYouPage = document.getElementById('thank-you-page');
     imageCarousel = document.querySelector('.image-carousel');
 
     if (!quoteForm || !submitButton) return;
@@ -12,6 +15,8 @@ const onPageLoad = () => {
         const apiURL = quoteForm.action;
         const data = new FormData(quoteForm);
         submitButton.disabled = true;
+        submitButton.textContent = "Sending request...";
+        errorText.textContent = "";
 
         console.log(data);
 
@@ -25,13 +30,19 @@ const onPageLoad = () => {
                 return response;
             }))
             .then(data => {
-                submitButton.disabled = false;
                 if (data.status === 200) {
-                    console.log("Sent quote request!");
-                    console.log(data.template);
+                    thankYouPage.classList.add('visible');
+                    quoteForm.remove();
                 } else {
-                    console.error("Error submitting form:");
-                    console.error(data);
+                    ++errorCount;
+                    if (errorCount < 3) {
+                        submitButton.disabled = false;
+                        submitButton.textContent = "Get your free quote";
+                        errorText.textContent = "We encountered an error submitting your form. Wait a few seconds and try again.";
+                    } else {
+                        submitButton.textContent = "Too many tries"
+                        errorText.textContent = "It seems like we can't send your quote request right now. Sorry for the inconvenience. Try again in a few hours.";
+                    }
                 }
             }).catch(error => {
                 console.error(error);
