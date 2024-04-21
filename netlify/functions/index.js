@@ -21,6 +21,7 @@ const router = Router();
 const csrfProtection = csrf({ cookie: true });
 
 const emailTemplate = fs.readFileSync('email_templates/quote_request.html').toString();
+const reportTemplate = fs.readFileSync('email_templates/request_confirmation.html').toString();
 
 const howOptions = {
     "current-client": "From a current client",
@@ -37,6 +38,27 @@ const generateEmail = (body) => {
     }
 
     return emailTemplate
+        .replace(/{{NAME}}/g, body.from)
+        .replace(/{{ADDRESS}}/g, address)
+        .replace(/{{EMAIL}}/g, body.email)
+        .replace(/{{PHONE}}/g, body.phone)
+        .replace(/{{CANTEXT}}/g, body.cantext ? "can" : "can not")
+        .replace(/{{COMMENTS}}/g, body.comments.replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/\n/g, '<br/>'))
+        .replace(/{{HOW}}/g, howOptions[body.how] ?? "Unknown")
+        .replace(/{{TYPE}}/g, body.type[0].toUpperCase() + body.type.slice(1))
+        .replace(/{{MAPS_URL}}/g, `https://www.google.com/maps/search/?api=1&query=${address.replace(/ /g, '+').replace(/,/g, "%2C").replace(/<br\/>/g, '+')}`);
+}
+
+const generateReport = (body) => {
+    let address;
+
+    if (body.address2 !== "") {
+        address = body.address + "<br/>" + body.address2 + "<br/>" + body.city + ", " + body.state + " " + body.zip
+    } else {
+        address = body.address + "<br/>" + body.city + ", " + body.state + " " + body.zip
+    }
+
+    return reportTemplate
         .replace(/{{NAME}}/g, body.from)
         .replace(/{{ADDRESS}}/g, address)
         .replace(/{{EMAIL}}/g, body.email)
@@ -67,7 +89,14 @@ router.post('/submit', upload.none(), csrfProtection, async (req, res) => {
         return res.status(500).send({ error: error })
     }
 
-    res.send({ message: "Quote request sent.", data: data });
+    let { reportData, reportError } = await resend.emails.send({
+        from: `Barricade Lawn and Landscape <onboarding@resend.dev>`,
+        to: [req.body.email],
+        subject: "Confirmation of Request",
+        html: generateReport(req.body),
+    });
+
+    res.send({ message: "Quote request sent.", request: data, report: reportData });
 })
 
 // Handle CSRF errors, respond with valid JSON
