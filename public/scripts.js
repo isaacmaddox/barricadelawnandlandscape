@@ -2,14 +2,16 @@ let imageCarousel;
 
 const onPageLoad = () => {
     const quoteForm = document.querySelector('form');
+    const submitButton = document.querySelector('form button[type="submit"]');
     imageCarousel = document.querySelector('.image-carousel');
 
-    if (!quoteForm) return;
+    if (!quoteForm || !submitButton) return;
 
     quoteForm.addEventListener('submit', (e) => {
         e.preventDefault();
         const apiURL = quoteForm.action;
         const data = new FormData(quoteForm);
+        submitButton.disabled = true;
 
         console.log(data);
 
@@ -23,6 +25,7 @@ const onPageLoad = () => {
                 return response;
             }))
             .then(data => {
+                submitButton.disabled = false;
                 if (data.status === 200) {
                     console.log("Sent quote request!");
                     console.log(data.template);

@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const serverless = require('serverless-http');
 const multer = require('multer');
 const fs = require('fs');
+const crypto = require('crypto');
 
 const app = express();
 const upload = multer();
@@ -57,6 +58,9 @@ router.post('/submit', upload.none(), csrfProtection, async (req, res) => {
         to: ["isaacmaddox05@gmail.com"],
         subject: "Quote Request",
         html: generateEmail(req.body),
+        headers: {
+            'X-Entity-Ref-ID': crypto.randomUUID()
+        }
     });
 
     if (error) {
