@@ -76,7 +76,7 @@ router.get('/', csrfProtection, (req, res) => {
 
 router.post('/submit', upload.none(), csrfProtection, async (req, res) => {
     let { data, error } = await resend.emails.send({
-        from: `${req.body.from} <onboarding@resend.dev>`,
+        from: `${req.body.from} <quote-requests@barricadelawnandlandscape.com>`,
         to: ["isaacmaddox05@gmail.com"],
         subject: "Quote Request",
         html: generateEmail(req.body),
@@ -90,7 +90,7 @@ router.post('/submit', upload.none(), csrfProtection, async (req, res) => {
     }
 
     let { reportData, reportError } = await resend.emails.send({
-        from: `Barricade Lawn and Landscape <onboarding@resend.dev>`,
+        from: `Barricade Lawn and Landscape <no-reply@barricadelawnandlandscape.com>`,
         to: [req.body.email],
         subject: "Confirmation of Request",
         html: generateReport(req.body),
