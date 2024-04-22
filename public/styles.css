@@ -370,6 +370,10 @@ form {
         grid-template-columns: 1fr;
     }
 
+    form .input-group.options {
+        gap: .25rem;
+    }
+
     #thank-you-page {
         & svg {
             max-height: 100px;
@@ -598,12 +602,18 @@ textarea {
 
 @media (width < 1024px) {
     .image-carousel {
-        height: 150px;
+        height: 200px;
         margin-inline: 1rem;
 
         & img {
             min-width: 225px;
         }
+    }
+}
+
+@media (width < 700px) {
+    .image-carousel {
+        overflow: auto;
     }
 }
 
