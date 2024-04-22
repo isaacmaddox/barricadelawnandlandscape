@@ -1,5 +1,6 @@
 let imageCarousel;
 let errorCount = 0;
+let mobileNav;
 
 const onPageLoad = () => {
     const quoteForm = document.querySelector('form');
@@ -7,8 +8,11 @@ const onPageLoad = () => {
     const errorText = document.getElementById('error-text');
     const thankYouPage = document.getElementById('thank-you-page');
     imageCarousel = document.querySelector('.image-carousel');
+    mobileNav = document.getElementById('nav-links');
 
     if (!quoteForm || !submitButton) return;
+
+    mobileNav.querySelectorAll('li a').forEach(link => link.addEventListener('click', closeMobileNav));
 
     quoteForm.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -66,6 +70,18 @@ const scrollImagesRight = () => {
         left: imageCarousel.scrollLeft + window.innerWidth / 2,
         behavior: 'smooth'
     });
+}
+
+const openMobileNav = () => {
+    if (!mobileNav) return;
+
+    mobileNav.classList.add('open');
+}
+
+const closeMobileNav = () => {
+    if (!mobileNav) return;
+
+    mobileNav.classList.remove('open');
 }
 
 document.addEventListener("DOMContentLoaded", onPageLoad);
