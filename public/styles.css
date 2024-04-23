@@ -425,7 +425,9 @@ input:not([type="checkbox"]), select, textarea {
 }
 
 input:-webkit-autofill,
-input:-webkit-autofill:focus {
+input:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:focus {
     transition: outline 200ms ease, background-color 0ms 600000s, color 0s 600000s !important;
 }
 
