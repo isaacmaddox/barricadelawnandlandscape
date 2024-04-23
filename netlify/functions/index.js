@@ -28,6 +28,17 @@ const howOptions = {
     "advertising": "Saw the truck and read the poster"
 };
 
+const sanitizeBody = (body) => {
+    let keys = Object.keys(body);
+    let newBody = body;
+
+    keys.forEach(key => {
+        newBody[key] = body[key].replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/\n/g, '<br/>');
+    })
+
+    return newBody;
+}
+
 const generateEmail = (body) => {
     let address;
 
@@ -75,11 +86,14 @@ router.get('/', csrfProtection, (req, res) => {
 })
 
 router.post('/submit', upload.none(), csrfProtection, async (req, res) => {
+    // Clean out any HTML entered by users
+    const body = sanitizeBody(req.body);
+
     let { data, error } = await resend.emails.send({
-        from: `${req.body.from} <quote-requests@barricadelawnandlandscape.com>`,
-        to: ["isaacmaddox05@gmail.com"],
+        from: `${body.from} <${process.env.REQ_FROM_EMAIL}>`,
+        to: process.env.REQ_TO_EMAIL,
         subject: "Quote Request",
-        html: generateEmail(req.body),
+        html: generateEmail(body),
         headers: {
             'X-Entity-Ref-ID': crypto.randomUUID()
         }
@@ -89,11 +103,11 @@ router.post('/submit', upload.none(), csrfProtection, async (req, res) => {
         return res.status(500).send({ error: error })
     }
 
-    let { reportData, reportError } = await resend.emails.send({
-        from: `Barricade Lawn and Landscape <no-reply@barricadelawnandlandscape.com>`,
-        to: [req.body.email],
+    let { reportData, _ } = await resend.emails.send({
+        from: `Barricade Lawn and Landscape <${process.env.CONF_FROM_EMAIL}>`,
+        to: [body.email],
         subject: "Confirmation of Request",
-        html: generateReport(req.body),
+        html: generateReport(body),
     });
 
     res.send({ message: "Quote request sent.", request: data, report: reportData });

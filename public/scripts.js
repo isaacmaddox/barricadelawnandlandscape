@@ -49,6 +49,17 @@ const onPageLoad = () => {
                     }
                 }
             }).catch(error => {
+                ++errorCount;
+
+                if (errorCount < 3) {
+                    submitButton.disabled = false;
+                    submitButton.textContent = "Get your free quote";
+                    errorText.textContent = "We encountered an error submitting your form. Wait a few seconds and try again.";
+                } else {
+                    submitButton.textContent = "Too many tries"
+                    errorText.textContent = "It seems like we can't send your quote request right now. Sorry for the inconvenience. Try again in a few hours.";
+                }
+
                 console.error(error);
             })
     })
