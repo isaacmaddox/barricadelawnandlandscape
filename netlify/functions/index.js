@@ -54,7 +54,7 @@ const generateEmail = (body) => {
         .replace(/{{EMAIL}}/g, body.email)
         .replace(/{{PHONE}}/g, body.phone)
         .replace(/{{CANTEXT}}/g, body.cantext ? "can" : "can not")
-        .replace(/{{COMMENTS}}/g, body.comments.replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/\n/g, '<br/>'))
+        .replace(/{{COMMENTS}}/g, body.comments)
         .replace(/{{HOW}}/g, howOptions[body.how] ?? "Unknown")
         .replace(/{{TYPE}}/g, body.type[0].toUpperCase() + body.type.slice(1))
         .replace(/{{MAPS_URL}}/g, `https://www.google.com/maps/search/?api=1&query=${address.replace(/ /g, '+').replace(/,/g, "%2C").replace(/<br\/>/g, '+')}`);
@@ -75,7 +75,7 @@ const generateReport = (body) => {
         .replace(/{{EMAIL}}/g, body.email)
         .replace(/{{PHONE}}/g, body.phone)
         .replace(/{{CANTEXT}}/g, body.cantext ? "can" : "can not")
-        .replace(/{{COMMENTS}}/g, body.comments.replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/\n/g, '<br/>'))
+        .replace(/{{COMMENTS}}/g, body.comments)
         .replace(/{{HOW}}/g, howOptions[body.how] ?? "Unknown")
         .replace(/{{TYPE}}/g, body.type[0].toUpperCase() + body.type.slice(1))
         .replace(/{{MAPS_URL}}/g, `https://www.google.com/maps/search/?api=1&query=${address.replace(/ /g, '+').replace(/,/g, "%2C").replace(/<br\/>/g, '+')}`);
