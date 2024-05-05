@@ -35,7 +35,7 @@
 @media (width < 1024px) {
     :root {
         --fs-small-heading: 1.125rem;
-        --fs-page-heading: 2.75rem;
+        --fs-page-heading: 2.625rem;
         --fs-section-heading: 1.875rem;
         --fs-card-heading: 1.5rem;
         --fs-lg: 1.12rem;
@@ -246,10 +246,17 @@ img {
     background-size: cover;
     background-position: center;
     min-height: max(100vh, 35rem);
-    min-height: max(100vh, 35rem);
-    padding-block: var(--section-spacing);
+    min-height: max(100dvh, 35rem);
+    padding-block: var(--section-spacing) 0;
     display: grid;
     place-items: center;
+}
+
+@media (width < 700px) {
+    #page-hero {
+        min-height: 100vh;
+        min-height: 100dvh;
+    }
 }
 
 main {
@@ -515,10 +522,17 @@ textarea {
     margin-top: calc(var(--section-spacing) / 2);
     display: flex;
     flex-wrap: wrap;
+    grid-template-columns: repeat(5, 1fr);
     gap: 1rem;
     justify-content: center;
     align-items: center;
     padding-inline: 1rem;
+}
+
+@media (width < 700px) {
+    .card-container {
+        flex-direction: column;
+    }
 }
 
 .even-card-container {
@@ -563,7 +577,7 @@ textarea {
 .service-card {
     max-width: 35ch;
     display: grid;
-    grid-template-rows: max-content max-content;
+    grid-template-rows: max-content 1fr;
     border-radius: 8px;
     overflow: hidden;
     border: 1px solid rgba(0, 0, 0, 0.05);
@@ -584,13 +598,21 @@ textarea {
         grid-row: 2;
         grid-column: 1;
         box-shadow: 0px 0px 40px 50px white;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+
+        & p {
+            margin-bottom: .75em;
+        }
 
         & hr {
-            margin-block: 1em;
+            margin-block: auto 1em;
             border-color: rgba(0, 0, 0, 0.05);
         }
     }
 }
+
 
 @media (width < 700px) {
     .service-card {
@@ -598,7 +620,7 @@ textarea {
         width: 100%;
 
         & img {
-            aspect-ratio: 2 / 1;
+            aspect-ratio: 2.5 / 1;
         }
     }
 }
@@ -696,13 +718,17 @@ footer {
         text-align: center;
         text-wrap: balance;
     }
+
+    .text-page-heading,
+    .text-section-heading {
+        text-wrap: balance;
+    }
 }
 
 .text-page-heading {
     font-size: var(--fs-page-heading);
     font-weight: var(--fw-page-heading);
     line-height: var(--lh-page-heading);
-    text-wrap: balance;
     color: var(--color-theme);
 }
 
@@ -710,7 +736,6 @@ footer {
     font-size: var(--fs-section-heading);
     font-weight: var(--fw-section-heading);
     line-height: var(--lh-section-heading);
-    text-wrap: balance;
     color: var(--color-theme);
 }
 

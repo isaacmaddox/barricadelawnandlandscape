@@ -24,8 +24,10 @@ const emailTemplate = fs.readFileSync('email_templates/quote_request.html').toSt
 const reportTemplate = fs.readFileSync('email_templates/request_confirmation.html').toString();
 
 const howOptions = {
-    "current-client": "From a current client",
-    "advertising": "Saw the truck and read the poster"
+    "social-media": "Social Media",
+    "referral": "Referral",
+    "website": "Website",
+    "other": "Other"
 };
 
 const sanitizeBody = (body) => {
