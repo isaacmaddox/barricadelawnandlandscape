@@ -10,6 +10,16 @@
   to = "/public/:splat"
 [[redirects]]
   force = true
+  from = "/images/carousel/:url"
+  status = 200
+  to = "/.netlify/images/?url=/public/images/carousel/:url&fm=webp"
+[[redirects]]
+  force = true
+  from = "/images/:url/:width/:height"
+  status = 200
+  to = "/.netlify/images/?url=/public/images/:url&w=:width&h=:height&fm=webp"
+[[redirects]]
+  force = true
   from = "/*"
   status = 200
   to = "/.netlify/functions/index/:splat"
