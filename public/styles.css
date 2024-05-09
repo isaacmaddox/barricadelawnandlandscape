@@ -1,6 +1,6 @@
 :root {
     --global-font: "Poppins", system-ui, sans-serif;
-    --fs-small-heading: 1.5rem;
+    --fs-small-heading: 1.625rem;
     --fw-small-heading: 900;
     --lh-small-heading: 1;
     --fs-page-heading: 3.375rem;
@@ -240,6 +240,9 @@ img {
     max-width: 100%;
 }
 
+#bright-heading {
+    color: var(--color-theme);
+}
 
 #page-hero {
     background: linear-gradient(to bottom, rgba(255, 255, 255, .65), rgba(255, 255, 255, 1)), url(/images/hero_background.jpg/1920/1080);
@@ -575,7 +578,7 @@ textarea {
 }
 
 .service-card {
-    max-width: 35ch;
+    max-width: 38ch;
     display: grid;
     grid-template-rows: max-content 1fr;
     border-radius: 8px;
