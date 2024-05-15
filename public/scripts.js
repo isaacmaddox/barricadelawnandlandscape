@@ -69,7 +69,7 @@ const scrollImagesLeft = () => {
     if (!imageCarousel) return;
 
     imageCarousel.scroll({
-        left: imageCarousel.scrollLeft - window.innerWidth * .75,
+        left: imageCarousel.scrollLeft - window.innerWidth * .5,
         behavior: 'smooth'
     });
 }
@@ -78,7 +78,7 @@ const scrollImagesRight = () => {
     if (!imageCarousel) return;
 
     imageCarousel.scroll({
-        left: imageCarousel.scrollLeft + window.innerWidth * .75,
+        left: imageCarousel.scrollLeft + window.innerWidth * .5,
         behavior: 'smooth'
     });
 }
