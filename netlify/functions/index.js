@@ -93,7 +93,7 @@ router.post('/submit', upload.none(), csrfProtection, async (req, res) => {
 
     let { data, error } = await resend.emails.send({
         from: `${body.from} <${process.env.REQ_FROM_EMAIL}>`,
-        to: [process.env.REQ_DEV_EMAIL],
+        to: [process.env.REQ_TO_EMAIL, process.env.REQ_DEV_EMAIL],
         subject: "Quote Request",
         html: generateEmail(body),
         headers: {
