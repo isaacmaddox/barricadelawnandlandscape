@@ -94,6 +94,7 @@ router.post('/submit', upload.none(), csrfProtection, async (req, res) => {
     let { data, error } = await resend.emails.send({
         from: `${body.from} <${process.env.REQ_FROM_EMAIL}>`,
         to: [process.env.REQ_TO_EMAIL],
+        reply_to: body.email,
         subject: "Quote Request",
         html: generateEmail(body),
         headers: {
@@ -108,6 +109,7 @@ router.post('/submit', upload.none(), csrfProtection, async (req, res) => {
     let { reportData, _ } = await resend.emails.send({
         from: `Barricade Lawn and Landscape <${process.env.CONF_FROM_EMAIL}>`,
         to: [body.email],
+        reply_to: process.env.REQ_TO_EMAIL,
         subject: "Confirmation of Request",
         html: generateReport(body),
     });
