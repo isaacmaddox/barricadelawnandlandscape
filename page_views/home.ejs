@@ -133,7 +133,7 @@
         </div>
         <div class="card-container">
           <div class="service-card">
-            <img src="/images/mowing.jpg/800/500" alt="" loading="lazy" />
+            <img src="/images/mowing.jpg/500/889" alt="" loading="lazy" />
             <div class="service-card-content">
               <h3 class="text-card-heading">Weekly Lawn Care</h3>
               <p>Weekly full-service lawn care <em>(biweekly during dry season at Barricade discretion)</em></p>
@@ -367,7 +367,12 @@
           <h2 class="text-section-heading">Frequently Asked Questions</h2>
           <% for (let i = 0; i < faqList.length; ++i) { %>
           <details>
-            <summary class="text-lg"><%= faqList[i].name %></summary>
+            <summary class="text-lg">
+              <%= faqList[i].name %>
+              <svg width="22" height="13" viewBox="0 0 22 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1.75 2.25L10.7429 11.2429C10.7468 11.2468 10.7532 11.2468 10.7571 11.2429L19.75 2.25" stroke="white" stroke-width="3" stroke-linecap="round" />
+              </svg>
+            </summary>
             <p><%= faqList[i].acceptedAnswer.text %></p>
           </details>
           <hr />
