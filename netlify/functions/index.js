@@ -30,7 +30,7 @@ const howOptions = {
     "referral": "Referral",
     "website": "Website",
     "other": "Other"
-};
+}
 
 const sanitizeBody = (body) => {
     let keys = Object.keys(body);
