@@ -342,6 +342,14 @@ section[class*="background"] {
         outline: 2px solid #000000;
         outline-offset: -2px;
         box-shadow: none;
+
+        &:hover {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        &:active {
+            background: rgba(0, 0, 0, 0.1);
+        }
     }
 }
 
@@ -713,6 +721,16 @@ footer {
     font-size: 1rem;
     margin-inline: auto;
     max-width: 80ch;
+}
+
+@media (width >=1024px) {
+    .center-self {
+        margin-inline: auto;
+    }
+}
+
+#instagram-link {
+    margin-top: 1em;
 }
 
 @media (width < 1024px) {

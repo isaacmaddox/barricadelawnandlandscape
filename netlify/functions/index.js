@@ -23,6 +23,8 @@ const csrfProtection = csrf({ cookie: true });
 const emailTemplate = fs.readFileSync('email_templates/quote_request.html').toString();
 const reportTemplate = fs.readFileSync('email_templates/request_confirmation.html').toString();
 
+const imageList = fs.readdirSync("public/images/carousel");
+
 const howOptions = {
     "social-media": "Social Media",
     "referral": "Referral",
@@ -84,7 +86,7 @@ const generateReport = (body) => {
 }
 
 router.get('/', csrfProtection, (req, res) => {
-    res.render('home', { csrfToken: req.csrfToken() });
+    res.render('home', { csrfToken: req.csrfToken(), images: imageList, env: process.env.ENVIRONMENT });
 })
 
 router.post('/submit', upload.none(), csrfProtection, async (req, res) => {
