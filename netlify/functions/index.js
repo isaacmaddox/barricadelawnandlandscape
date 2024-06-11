@@ -23,7 +23,7 @@ const csrfProtection = csrf({ cookie: true });
 const emailTemplate = fs.readFileSync('email_templates/quote_request.html').toString();
 const reportTemplate = fs.readFileSync('email_templates/request_confirmation.html').toString();
 
-const imageList = process.env.DEVELOPMENT ? fs.readdirSync("./public/images/carousel") : fs.readdirSync("public/images/carousel");
+const imageList = process.env.DEVELOPMENT ? fs.readdirSync("public/images/carousel") : fs.readdirSync("/public/images/carousel");
 
 const howOptions = {
     "social-media": "Social Media",
