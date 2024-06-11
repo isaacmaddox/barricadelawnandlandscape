@@ -370,7 +370,22 @@
           </form>
         </div>
       </section>
+      <section id="faqs" class="background">
+        <div class="text-container">
+          <h2 class="text-section-heading">Frequently Asked Questions</h2>
+          <% for (let i = 0; i < faqList.length; ++i) { %>
+          <details>
+            <summary class="text-lg"><%= faqList[i].name %></summary>
+            <p><%= faqList[i].acceptedAnswer.text %></p>
+          </details>
+          <hr />
+          <% } %>
+        </div>
+      </section>
     </main>
+    <script type="application/ld+json">
+      <%- faqSchema %>
+    </script>
     <footer>
       <div class="text-container">
         <p>Call us at <a href="tel:7273313591">(727) 331-3591</a></p>

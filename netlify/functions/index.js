@@ -25,6 +25,8 @@ const reportTemplate = fs.readFileSync('email_templates/request_confirmation.htm
 
 const imageList = fs.readdirSync("public/images/carousel");
 
+const faqList = fs.readFileSync("page_views/faqs.json").toString("utf-8");
+
 const howOptions = {
     "social-media": "Social Media",
     "referral": "Referral",
@@ -86,7 +88,15 @@ const generateReport = (body) => {
 }
 
 router.get('/', csrfProtection, (req, res) => {
-    res.render('home', { csrfToken: req.csrfToken(), images: imageList, env: process.env.ENVIRONMENT });
+    console.log(faqList);
+
+    res.render('home', {
+        csrfToken: req.csrfToken(),
+        images: imageList,
+        env: process.env.ENVIRONMENT,
+        faqSchema: faqList,
+        faqList: JSON.parse(faqList).mainEntity,
+    });
 })
 
 router.post('/submit', upload.none(), csrfProtection, async (req, res) => {

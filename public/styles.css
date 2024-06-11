@@ -262,10 +262,6 @@ img {
     }
 }
 
-main {
-    padding-bottom: 4rem;
-}
-
 .section-theme-background {
     background: var(--color-theme-background);
 }
@@ -686,6 +682,45 @@ textarea {
 @media (width < 1024px) {
     .image-carousel-controls {
         margin-inline: 1rem;
+    }
+}
+
+#faqs {
+    background: var(--color-theme-background);
+    padding-block: var(--section-spacing);
+
+    & h2 {
+        margin-bottom: .75em;
+    }
+
+    & hr {
+        border-color: rgba(0, 0, 0, 0.1);
+        margin: .25em 1em;
+    }
+}
+
+details {
+    width: 100%;
+    border-radius: .5em;
+
+    & summary {
+        padding: .75em 1em;
+        cursor: pointer;
+        border-radius: .5em;
+    }
+
+    & p {
+        padding: 0em 1em 1em 1em;
+    }
+}
+
+@media (width < 1024px) {
+    details summary {
+        padding: .625em .75em;
+    }
+
+    details p {
+        padding: 0em .75em .75em .75em;
     }
 }
 
