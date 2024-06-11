@@ -16,10 +16,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="google" content="notranslate" />
     <meta name="author" content="Isaac Maddox" />
-    <meta name="googlebot" content="index,follow" />
     <% if (env === "production") { %>
+    <meta name="googlebot" content="index,follow" />
     <meta name="robots" content="index,follow" />
     <% } else { %>
+    <meta name="googlebot" content="noindex,nofollow" />
     <meta name="robots" content="noindex,nofollow" />
     <% } %>
     <meta name="google" content="nositelinkssearchbox" />
@@ -168,15 +169,6 @@
         <div class="image-carousel">
           <% for(let i = 0; i < images.length; ++i) { %>
           <img src="/images/carousel/<%= images[i] %>" alt="" loading="lazy" />
-          <!-- <img src="/images/carousel/truck" alt="" loading="lazy" />
-          <img src="/images/carousel/blowing" alt="" loading="lazy" />
-          <img src="/images/carousel/bushes" alt="" loading="lazy" />
-          <img src="/images/carousel/flower" alt="" loading="lazy" />
-          <img src="/images/carousel/lawn_wide" alt="" loading="lazy" />
-          <img src="/images/carousel/mulch_and_bush" alt="" loading="lazy" />
-          <img src="/images/carousel/push_mower" alt="" loading="lazy" />
-          <img src="/images/carousel/riding_mower" alt="" loading="lazy" />
-          <img src="/images/carousel/us" alt="" loading="lazy" /> -->
           <% } %>
         </div>
         <div class="image-carousel-controls" aria-hidden="true">
