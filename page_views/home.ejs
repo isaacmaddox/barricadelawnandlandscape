@@ -34,7 +34,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/public/styles.css" />
-    <link rel="shortcut icon" href="/public/logo.png" type="image/png" />
+    <link rel="shortcut icon" href="/public/favicon.png" type="image/png" />
     <script src="/public/scripts.js"></script>
     <% if (env === "production") { %>
     <title>Barricade Lawn and Landscape</title>
@@ -46,7 +46,7 @@
     <header>
       <nav id="global-nav">
         <div id="nav-logo">
-          <img src="/public/logo.png" alt="" />
+          <img src="/public/logo_nav.png" alt="" />
           <p>Barricade</p>
           <small>Lawn and Landscape, LLC</small>
         </div>
@@ -364,7 +364,7 @@
       </section>
       <section id="faqs" class="background">
         <div class="text-container">
-          <h2 class="text-section-heading">Frequently Asked Questions</h2>
+          <h2 class="text-section-heading text-center">Frequently Asked Questions</h2>
           <% for (let i = 0; i < faqList.length; ++i) { %>
           <details>
             <summary class="text-lg">
