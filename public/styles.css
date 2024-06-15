@@ -588,6 +588,7 @@ textarea {
     .even-card-container {
         grid-template-columns: repeat(2, 1fr);
         gap: 2rem 1rem;
+        max-width: 80ch;
     }
 }
 
