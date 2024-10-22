@@ -130,7 +130,8 @@ router.post('/submit', upload.none(), csrfProtection, async (req, res) => {
     });
 
     res.cookie("quote-request", new Date().toString(), {
-        maxAge: 86400 * 1000
+        maxAge: 86400 * 1000,
+        httpOnly: true,
     }).send({ message: "Quote request sent.", request: data, report: reportData });
 })
 
