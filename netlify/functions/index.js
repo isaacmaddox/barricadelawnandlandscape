@@ -23,12 +23,16 @@ const csrfProtection = csrf({ cookie: true });
 const emailTemplate = fs.readFileSync('email_templates/quote_request.html').toString();
 const reportTemplate = fs.readFileSync('email_templates/request_confirmation.html').toString();
 
+const imageList = fs.readdirSync("public/images/carousel");
+
+const faqSchema = fs.readFileSync("page_views/faqs.json").toString("utf-8");
+
 const howOptions = {
     "social-media": "Social Media",
     "referral": "Referral",
     "website": "Website",
     "other": "Other"
-};
+}
 
 const sanitizeBody = (body) => {
     let keys = Object.keys(body);
@@ -84,12 +88,23 @@ const generateReport = (body) => {
 }
 
 router.get('/', csrfProtection, (req, res) => {
-    res.render('home', { csrfToken: req.csrfToken() });
+    res.render('home', {
+        csrfToken: req.csrfToken(),
+        images: imageList,
+        env: process.env.ENVIRONMENT,
+        faqSchema: faqSchema,
+        faqList: JSON.parse(faqSchema).mainEntity,
+    });
 })
 
 router.post('/submit', upload.none(), csrfProtection, async (req, res) => {
     // Clean out any HTML entered by users
     const body = sanitizeBody(req.body);
+    if (req.cookies["quote-request"]) {
+        return res.status(403).json({
+            message: "You can't send another request right now",
+        })
+    }
 
     let { data, error } = await resend.emails.send({
         from: `${body.from} <${process.env.REQ_FROM_EMAIL}>`,
@@ -114,7 +129,10 @@ router.post('/submit', upload.none(), csrfProtection, async (req, res) => {
         html: generateReport(body),
     });
 
-    res.send({ message: "Quote request sent.", request: data, report: reportData });
+    res.cookie("quote-request", new Date().toString(), {
+        maxAge: 86400 * 1000,
+        httpOnly: true,
+    }).send({ message: "Quote request sent.", request: data, report: reportData });
 })
 
 // Handle CSRF errors, respond with valid JSON

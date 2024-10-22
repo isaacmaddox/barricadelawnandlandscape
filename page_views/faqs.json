@@ -1,0 +1,38 @@
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Who are we?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We are a local family owned and operated, certified, licensed and insured lawn care provider. We follow the 9 Principles of Florida-friendly landscaping set forth by the IFAS Extension office, as applicable."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What areas do you service?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We proudly service the Seminole, Largo, Indian Rocks, Indian Shores, Madeira Beach and Treasure Island areas."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What services do you offer?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We offer residential, commercial lawn care, landscaping, pressure washing and property clean ups."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Why Barricade Lawn and Landscape?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "We pride ourselves in exceptional customer service. We require NO contracts, easy billing and online payment options. We use the right equipment for our unique environment. (i.e. smaller equipment allowing us to alternate mowing patterns to minimize and possibly eliminate ruts and encourage strong, healthy lawn)"
+      }
+    }
+  ]
+}
