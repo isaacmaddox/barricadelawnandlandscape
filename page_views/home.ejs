@@ -1,211 +1,210 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7K067092GS"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
+   <head>
+      <!-- Google tag (gtag.js) -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-7K067092GS"></script>
+      <script>
+         window.dataLayer = window.dataLayer || [];
+         function gtag() {
+            dataLayer.push(arguments);
+         }
+         gtag("js", new Date());
 
-      gtag("config", "G-7K067092GS");
-    </script>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="google" content="notranslate" />
-    <meta name="author" content="Isaac Maddox" />
-    <% if (env === "production") { %>
-    <meta name="googlebot" content="index,follow" />
-    <meta name="robots" content="index,follow" />
-    <% } else { %>
-    <meta name="googlebot" content="noindex,nofollow" />
-    <meta name="robots" content="noindex,nofollow" />
-    <% } %>
-    <meta name="google" content="nositelinkssearchbox" />
-    <meta name="description" content="Proudly serving the Largo, Seminole, Indian Rocks and Indian Shores areas. Family owned and operated." />
-    <meta name="twitter:title" content="Barricade Lawn and Landscape" />
-    <meta name="twitter:description" content="Proudly serving the Largo, Seminole, Indian Rocks and Indian Shores areas. Family owned and operated." />
-    <meta name="twitter:image" content="https://barricadelawnandlandscape.com/.netlify/images/?url=/public/images/carousel/lawn_wide.jpg&w=600&h=350" />
-    <meta name="og:title" content="Barricade Lawn and Landscape" />
-    <meta name="og:site_name" content="Barricade Lawn and Landscape" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="/public/styles.css" />
-    <link rel="shortcut icon" href="/public/favicon.png" type="image/png" />
-    <script src="/public/scripts.js"></script>
-    <% if (env === "production") { %>
-    <title>Barricade Lawn and Landscape</title>
-    <% } else { %>
-    <title>Preview | BLL</title>
-    <% } %>
-  </head>
-  <body>
-    <header>
-      <nav id="global-nav">
-        <div id="nav-logo">
-          <img src="/public/logo_nav.png" alt="" />
-          <p>Barricade</p>
-          <small>Lawn and Landscape, LLC</small>
-        </div>
-        <ul id="nav-links">
-          <li class="mobile-only"><button class="btn small theme" id="close-mobile-nav" type="button" onclick="closeMobileNav()">Close Menu</button></li>
-          <li><a href="#why-us">Why Us</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#photos">Photos</a></li>
-          <li><a href="#quote">Get a Quote</a></li>
-        </ul>
-        <button class="btn small theme mobile-only" type="button" onclick="openMobileNav()">Menu</button>
-      </nav>
-      <section id="page-hero">
-        <div class="text-container text-center">
-          <h1 class="text-small-heading" id="bright-heading">Barricade Lawn and Landscape, LLC</h1>
-          <h2 class="text-page-heading">Tailoring your Lawn and Landscape to our Unique and Diverse Ecosystem</h2>
-          <p class="text-lg">Proudly family owned and operated, passing on our curiosity, dedication and hard work from one generation to the next.</p>
-          <div class="btn-container">
-            <a href="#quote" class="btn">Contact Us</a>
-            <a href="#why-us" class="btn outline">Learn More</a>
-          </div>
-        </div>
-      </section>
-    </header>
-    <main>
-      <section id="why-us">
-        <div class="text-container text-center">
-          <h2 class="text-small-heading">Why Us?</h2>
-          <p class="text-section-heading">Providing Friendly and Exceptional Service</p>
-          <div class="btn-container">
-            <a href="https://www.instagram.com/barricadelawnandlandscape/" target="_blank" title="See us on Instagram" class="btn" id="instagram">
-              <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
-                <defs>
-                  <style>
-                    .cls-1 {
-                      fill: #fff;
-                    }
-                  </style>
-                </defs>
-                <path
-                  class="cls-1"
-                  d="M295.42,6c-53.2,2.51-89.53,11-121.29,23.48-32.87,12.81-60.73,30-88.45,57.82S40.89,143,28.17,175.92c-12.31,31.83-20.65,68.19-23,121.42S2.3,367.68,2.56,503.46,3.42,656.26,6,709.6c2.54,53.19,11,89.51,23.48,121.28,12.83,32.87,30,60.72,57.83,88.45S143,964.09,176,976.83c31.8,12.29,68.17,20.67,121.39,23s70.35,2.87,206.09,2.61,152.83-.86,206.16-3.39S799.1,988,830.88,975.58c32.87-12.86,60.74-30,88.45-57.84S964.1,862,976.81,829.06c12.32-31.8,20.69-68.17,23-121.35,2.33-53.37,2.88-70.41,2.62-206.17s-.87-152.78-3.4-206.1-11-89.53-23.47-121.32c-12.85-32.87-30-60.7-57.82-88.45S862,40.87,829.07,28.19c-31.82-12.31-68.17-20.7-121.39-23S637.33,2.3,501.54,2.56,348.75,3.4,295.42,6m5.84,903.88c-48.75-2.12-75.22-10.22-92.86-17-23.36-9-40-19.88-57.58-37.29s-28.38-34.11-37.5-57.42c-6.85-17.64-15.1-44.08-17.38-92.83-2.48-52.69-3-68.51-3.29-202s.22-149.29,2.53-202c2.08-48.71,10.23-75.21,17-92.84,9-23.39,19.84-40,37.29-57.57s34.1-28.39,57.43-37.51c17.62-6.88,44.06-15.06,92.79-17.38,52.73-2.5,68.53-3,202-3.29s149.31.21,202.06,2.53c48.71,2.12,75.22,10.19,92.83,17,23.37,9,40,19.81,57.57,37.29s28.4,34.07,37.52,57.45c6.89,17.57,15.07,44,17.37,92.76,2.51,52.73,3.08,68.54,3.32,202s-.23,149.31-2.54,202c-2.13,48.75-10.21,75.23-17,92.89-9,23.35-19.85,40-37.31,57.56s-34.09,28.38-57.43,37.5c-17.6,6.87-44.07,15.07-92.76,17.39-52.73,2.48-68.53,3-202.05,3.29s-149.27-.25-202-2.53m407.6-674.61a60,60,0,1,0,59.88-60.1,60,60,0,0,0-59.88,60.1M245.77,503c.28,141.8,115.44,256.49,257.21,256.22S759.52,643.8,759.25,502,643.79,245.48,502,245.76,245.5,361.22,245.77,503m90.06-.18a166.67,166.67,0,1,1,167,166.34,166.65,166.65,0,0,1-167-166.34"
-                  transform="translate(-2.5 -2.5)"
-                />
-              </svg>
-              Instagram
-            </a>
-            <a href="https://www.facebook.com/profile.php?id=100082728873351" target="_blank" title="See us on Instagram" class="btn" id="facebook">
-              <img src="/public/facebook.png" alt="" />
-              Facebook
-            </a>
-          </div>
-        </div>
-        <div class="even-card-container">
-          <div class="reason-card">
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="1.92" y="1.92" width="44.16" height="44.16" rx="22.08" stroke="#FC8C21" stroke-width="3.84" />
-              <path d="M13.9199 26.6401L18.9565 31.6767C18.9584 31.6786 18.9614 31.6786 18.9633 31.6767L34.7999 15.8401" stroke="#FC8C21" stroke-width="3.36" stroke-linecap="round" />
-            </svg>
-
-            <h3 class="text-card-heading">No Contracts</h3>
-            <p>We offer convenient billing options</p>
-          </div>
-          <div class="reason-card">
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="1.92" y="1.92" width="44.16" height="44.16" rx="22.08" stroke="#FC8C21" stroke-width="3.84" />
-              <path d="M13.9199 26.6401L18.9565 31.6767C18.9584 31.6786 18.9614 31.6786 18.9633 31.6767L34.7999 15.8401" stroke="#FC8C21" stroke-width="3.36" stroke-linecap="round" />
-            </svg>
-
-            <h3 class="text-card-heading">Site Management</h3>
-            <p>Taking care of your lawn, landscape and outside maintenance needs</p>
-          </div>
-          <div class="reason-card">
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="1.92" y="1.92" width="44.16" height="44.16" rx="22.08" stroke="#FC8C21" stroke-width="3.84" />
-              <path d="M13.9199 26.6401L18.9565 31.6767C18.9584 31.6786 18.9614 31.6786 18.9633 31.6767L34.7999 15.8401" stroke="#FC8C21" stroke-width="3.36" stroke-linecap="round" />
-            </svg>
-
-            <h3 class="text-card-heading">Professional</h3>
-            <p>Licensed, insured, certified operators with focus on continuing education</p>
-          </div>
-          <div class="reason-card">
-            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="1.92" y="1.92" width="44.16" height="44.16" rx="22.08" stroke="#FC8C21" stroke-width="3.84" />
-              <path d="M13.9199 26.6401L18.9565 31.6767C18.9584 31.6786 18.9614 31.6786 18.9633 31.6767L34.7999 15.8401" stroke="#FC8C21" stroke-width="3.36" stroke-linecap="round" />
-            </svg>
-
-            <h3 class="text-card-heading">Branded</h3>
-            <p>Uniformed operators with Barricade Lawn & Landscape, LLC branded vehicles</p>
-          </div>
-        </div>
-      </section>
-      <section id="services" class="section-theme-background">
-        <div class="text-container text-center">
-          <h2 class="text-small-heading">Our Services</h2>
-          <p class="text-section-heading">Full Service Lawn and Landscape for Residential and Commercial Clientele</p>
-          <p class="text-lg">Proudly serving the Largo, Seminole, Indian Rocks and Indian Shores areas.</p>
-        </div>
-        <div class="card-container">
-          <div class="service-card">
-            <img src="/images/mowing.jpg/500/889" alt="" loading="lazy" />
-            <div class="service-card-content">
-              <h3 class="text-card-heading">Weekly Lawn Care</h3>
-              <p>Weekly full-service lawn care <em>(biweekly during dry season at Barricade discretion)</em></p>
+         gtag("config", "G-7K067092GS");
+      </script>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta name="google" content="notranslate" />
+      <meta name="author" content="Isaac Maddox" />
+      <% if (env === "production") { %>
+      <meta name="googlebot" content="index,follow" />
+      <meta name="robots" content="index,follow" />
+      <% } else { %>
+      <meta name="googlebot" content="noindex,nofollow" />
+      <meta name="robots" content="noindex,nofollow" />
+      <% } %>
+      <meta name="google" content="nositelinkssearchbox" />
+      <meta name="description" content="Proudly serving the Largo, Seminole, Indian Rocks and Indian Shores areas. Family owned and operated." />
+      <meta name="twitter:title" content="Barricade Lawn and Landscape" />
+      <meta name="twitter:description" content="Proudly serving the Largo, Seminole, Indian Rocks and Indian Shores areas. Family owned and operated." />
+      <meta name="twitter:image" content="https://barricadelawnandlandscape.com/.netlify/images/?url=/public/images/carousel/lawn_wide.jpg&w=600&h=350" />
+      <meta name="og:title" content="Barricade Lawn and Landscape" />
+      <meta name="og:site_name" content="Barricade Lawn and Landscape" />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet" />
+      <link rel="stylesheet" href="/public/styles.css" />
+      <link rel="shortcut icon" href="/public/favicon.png" type="image/png" />
+      <script src="/public/scripts.js"></script>
+      <% if (env === "production") { %>
+      <title>Barricade Lawn and Landscape</title>
+      <% } else { %>
+      <title>Preview | BLL</title>
+      <% } %>
+   </head>
+   <body>
+      <header>
+         <nav id="global-nav">
+            <div id="nav-logo">
+               <img src="/public/logo_nav.png" alt="" />
+               <p>Barricade</p>
+               <small>Lawn and Landscape, LLC</small>
             </div>
-          </div>
-          <div class="service-card">
-            <img src="/images/landscaping.jpg/600/400" alt="" loading="lazy" />
-            <div class="service-card-content">
-              <h3 class="text-card-heading">Landscape Maintenance</h3>
-              <p>Tailored landscape maintenance</p>
+            <ul id="nav-links">
+               <li class="mobile-only"><button class="btn small theme" id="close-mobile-nav" type="button" onclick="closeMobileNav()">Close Menu</button></li>
+               <li><a href="#why-us">Why Us</a></li>
+               <li><a href="#services">Services</a></li>
+               <li><a href="#photos">Photos</a></li>
+               <li><a href="#quote">Get a Quote</a></li>
+            </ul>
+            <button class="btn small theme mobile-only" type="button" onclick="openMobileNav()">Menu</button>
+         </nav>
+         <section id="page-hero">
+            <div class="text-container text-center">
+               <h1 class="text-small-heading" id="bright-heading">Barricade Lawn and Landscape, LLC</h1>
+               <h2 class="text-page-heading">Tailoring your Lawn and Landscape to our Unique and Diverse Ecosystem</h2>
+               <p class="text-lg">Proudly family owned and operated, passing on our curiosity, dedication and hard work from one generation to the next.</p>
+               <div class="btn-container">
+                  <a href="#quote" class="btn">Contact Us</a>
+                  <a href="#why-us" class="btn outline">Learn More</a>
+               </div>
             </div>
-          </div>
-          <div class="service-card">
-            <img src="/images/surface_cleaning.jpg/600/400" alt="" loading="lazy" />
-            <div class="service-card-content">
-              <h3 class="text-card-heading">Surface Cleaning</h3>
-              <p>Driveway, sidewalk, fencing and birdcage</p>
+         </section>
+      </header>
+      <main>
+         <section id="why-us">
+            <div class="text-container text-center">
+               <h2 class="text-small-heading">Why Us?</h2>
+               <p class="text-section-heading">Providing Friendly and Exceptional Service</p>
+               <div class="btn-container">
+                  <a href="https://www.instagram.com/barricadelawnandlandscape/" target="_blank" title="See us on Instagram" class="btn" id="instagram">
+                     <svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000">
+                        <defs>
+                           <style>
+                              .cls-1 {
+                                 fill: #fff;
+                              }
+                           </style>
+                        </defs>
+                        <path
+                           class="cls-1"
+                           d="M295.42,6c-53.2,2.51-89.53,11-121.29,23.48-32.87,12.81-60.73,30-88.45,57.82S40.89,143,28.17,175.92c-12.31,31.83-20.65,68.19-23,121.42S2.3,367.68,2.56,503.46,3.42,656.26,6,709.6c2.54,53.19,11,89.51,23.48,121.28,12.83,32.87,30,60.72,57.83,88.45S143,964.09,176,976.83c31.8,12.29,68.17,20.67,121.39,23s70.35,2.87,206.09,2.61,152.83-.86,206.16-3.39S799.1,988,830.88,975.58c32.87-12.86,60.74-30,88.45-57.84S964.1,862,976.81,829.06c12.32-31.8,20.69-68.17,23-121.35,2.33-53.37,2.88-70.41,2.62-206.17s-.87-152.78-3.4-206.1-11-89.53-23.47-121.32c-12.85-32.87-30-60.7-57.82-88.45S862,40.87,829.07,28.19c-31.82-12.31-68.17-20.7-121.39-23S637.33,2.3,501.54,2.56,348.75,3.4,295.42,6m5.84,903.88c-48.75-2.12-75.22-10.22-92.86-17-23.36-9-40-19.88-57.58-37.29s-28.38-34.11-37.5-57.42c-6.85-17.64-15.1-44.08-17.38-92.83-2.48-52.69-3-68.51-3.29-202s.22-149.29,2.53-202c2.08-48.71,10.23-75.21,17-92.84,9-23.39,19.84-40,37.29-57.57s34.1-28.39,57.43-37.51c17.62-6.88,44.06-15.06,92.79-17.38,52.73-2.5,68.53-3,202-3.29s149.31.21,202.06,2.53c48.71,2.12,75.22,10.19,92.83,17,23.37,9,40,19.81,57.57,37.29s28.4,34.07,37.52,57.45c6.89,17.57,15.07,44,17.37,92.76,2.51,52.73,3.08,68.54,3.32,202s-.23,149.31-2.54,202c-2.13,48.75-10.21,75.23-17,92.89-9,23.35-19.85,40-37.31,57.56s-34.09,28.38-57.43,37.5c-17.6,6.87-44.07,15.07-92.76,17.39-52.73,2.48-68.53,3-202.05,3.29s-149.27-.25-202-2.53m407.6-674.61a60,60,0,1,0,59.88-60.1,60,60,0,0,0-59.88,60.1M245.77,503c.28,141.8,115.44,256.49,257.21,256.22S759.52,643.8,759.25,502,643.79,245.48,502,245.76,245.5,361.22,245.77,503m90.06-.18a166.67,166.67,0,1,1,167,166.34,166.65,166.65,0,0,1-167-166.34"
+                           transform="translate(-2.5 -2.5)" />
+                     </svg>
+                     Instagram
+                  </a>
+                  <a href="https://www.facebook.com/profile.php?id=100082728873351" target="_blank" title="See us on Instagram" class="btn" id="facebook">
+                     <img src="/public/facebook.png" alt="" />
+                     Facebook
+                  </a>
+               </div>
             </div>
-          </div>
-          <div class="service-card">
-            <img src="/images/bed_maintenance.jpg/600/700" alt="" loading="lazy" />
-            <div class="service-card-content">
-              <h3 class="text-card-heading">Flower Beds</h3>
-              <p>Design and refresh hardscape and softscape areas</p>
+            <div class="even-card-container">
+               <div class="reason-card">
+                  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                     <rect x="1.92" y="1.92" width="44.16" height="44.16" rx="22.08" stroke="#FC8C21" stroke-width="3.84" />
+                     <path d="M13.9199 26.6401L18.9565 31.6767C18.9584 31.6786 18.9614 31.6786 18.9633 31.6767L34.7999 15.8401" stroke="#FC8C21" stroke-width="3.36" stroke-linecap="round" />
+                  </svg>
+
+                  <h3 class="text-card-heading">No Contracts</h3>
+                  <p>We offer convenient billing options</p>
+               </div>
+               <div class="reason-card">
+                  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                     <rect x="1.92" y="1.92" width="44.16" height="44.16" rx="22.08" stroke="#FC8C21" stroke-width="3.84" />
+                     <path d="M13.9199 26.6401L18.9565 31.6767C18.9584 31.6786 18.9614 31.6786 18.9633 31.6767L34.7999 15.8401" stroke="#FC8C21" stroke-width="3.36" stroke-linecap="round" />
+                  </svg>
+
+                  <h3 class="text-card-heading">Site Management</h3>
+                  <p>Taking care of your lawn, landscape and outside maintenance needs</p>
+               </div>
+               <div class="reason-card">
+                  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                     <rect x="1.92" y="1.92" width="44.16" height="44.16" rx="22.08" stroke="#FC8C21" stroke-width="3.84" />
+                     <path d="M13.9199 26.6401L18.9565 31.6767C18.9584 31.6786 18.9614 31.6786 18.9633 31.6767L34.7999 15.8401" stroke="#FC8C21" stroke-width="3.36" stroke-linecap="round" />
+                  </svg>
+
+                  <h3 class="text-card-heading">Professional</h3>
+                  <p>Licensed, insured, certified operators with focus on continuing education</p>
+               </div>
+               <div class="reason-card">
+                  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                     <rect x="1.92" y="1.92" width="44.16" height="44.16" rx="22.08" stroke="#FC8C21" stroke-width="3.84" />
+                     <path d="M13.9199 26.6401L18.9565 31.6767C18.9584 31.6786 18.9614 31.6786 18.9633 31.6767L34.7999 15.8401" stroke="#FC8C21" stroke-width="3.36" stroke-linecap="round" />
+                  </svg>
+
+                  <h3 class="text-card-heading">Branded</h3>
+                  <p>Uniformed operators with Barricade Lawn & Landscape, LLC branded vehicles</p>
+               </div>
             </div>
-          </div>
-        </div>
-      </section>
-      <section id="photos">
-        <div class="text-container text-center">
-          <h2 class="text-section-heading">Our Photos</h2>
-        </div>
-        <div class="image-carousel">
-          <% for(let i = 0; i < images.length; ++i) { %>
-          <img src="/images/carousel/<%= images[i] %>" alt="" loading="lazy" />
-          <% } %>
-        </div>
-        <div class="image-carousel-controls" aria-hidden="true">
-          <button id="carousel-left" class="btn theme square" onclick="scrollImagesLeft()" tabindex="-1">
-            <svg width="23" height="18" viewBox="0 0 23 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10.5 1.5L3 9M3 9L10.5 16.5M3 9H21" stroke="white" stroke-width="3" stroke-linecap="round" />
-            </svg>
-          </button>
-          <button id="carousel-right" class="btn theme" onclick="scrollImagesRight()" tabindex="-1">
-            See More
-            <svg width="23" height="18" viewBox="0 0 23 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M12.5 1.5L20 9M20 9L12.5 16.5M20 9H2" stroke="white" stroke-width="3" stroke-linecap="round" />
-            </svg>
-          </button>
-        </div>
-      </section>
-      <section id="quote">
-        <div class="text-container">
-          <h2 class="text-small-heading text-center">Contact Us</h2>
-          <p class="text-section-heading text-center">Get a Quote</p>
-          <p class="text-lg text-center">Ready to Barricade Your Lawn and Landscape?</p>
-          <p class="text-red text-center">* = required</p>
-          <div id="thank-you-page">
+         </section>
+         <section id="services" class="section-theme-background">
+            <div class="text-container text-center">
+               <h2 class="text-small-heading">Our Services</h2>
+               <p class="text-section-heading">Full Service Lawn and Landscape for Residential and Commercial Clientele</p>
+               <p class="text-lg">Proudly serving the Largo, Seminole, Indian Rocks and Indian Shores areas.</p>
+            </div>
+            <div class="card-container">
+               <div class="service-card">
+                  <img src="/images/mowing.jpg/500/889" alt="" loading="lazy" />
+                  <div class="service-card-content">
+                     <h3 class="text-card-heading">Weekly Lawn Care</h3>
+                     <p>Weekly full-service lawn care <em>(biweekly during dry season at Barricade discretion)</em></p>
+                  </div>
+               </div>
+               <div class="service-card">
+                  <img src="/images/landscaping.jpg/600/400" alt="" loading="lazy" />
+                  <div class="service-card-content">
+                     <h3 class="text-card-heading">Landscape Maintenance</h3>
+                     <p>Tailored landscape maintenance</p>
+                  </div>
+               </div>
+               <div class="service-card">
+                  <img src="/images/surface_cleaning.jpg/600/400" alt="" loading="lazy" />
+                  <div class="service-card-content">
+                     <h3 class="text-card-heading">Surface Cleaning</h3>
+                     <p>Driveway, sidewalk, fencing and birdcage</p>
+                  </div>
+               </div>
+               <div class="service-card">
+                  <img src="/images/bed_maintenance.jpg/600/700" alt="" loading="lazy" />
+                  <div class="service-card-content">
+                     <h3 class="text-card-heading">Flower Beds</h3>
+                     <p>Design and refresh hardscape and softscape areas</p>
+                  </div>
+               </div>
+            </div>
+         </section>
+         <section id="photos">
+            <div class="text-container text-center">
+               <h2 class="text-section-heading">Our Photos</h2>
+            </div>
+            <div class="image-carousel">
+               <% for(let i = 0; i < images.length; ++i) { %>
+               <img src="/images/carousel/<%= images[i] %>" alt="" loading="lazy" />
+               <% } %>
+            </div>
+            <div class="image-carousel-controls" aria-hidden="true">
+               <button id="carousel-left" class="btn theme square" onclick="scrollImagesLeft()" tabindex="-1">
+                  <svg width="23" height="18" viewBox="0 0 23 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                     <path d="M10.5 1.5L3 9M3 9L10.5 16.5M3 9H21" stroke="white" stroke-width="3" stroke-linecap="round" />
+                  </svg>
+               </button>
+               <button id="carousel-right" class="btn theme" onclick="scrollImagesRight()" tabindex="-1">
+                  See More
+                  <svg width="23" height="18" viewBox="0 0 23 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                     <path d="M12.5 1.5L20 9M20 9L12.5 16.5M20 9H2" stroke="white" stroke-width="3" stroke-linecap="round" />
+                  </svg>
+               </button>
+            </div>
+         </section>
+         <section id="quote">
+            <div class="text-container">
+               <h2 class="text-small-heading text-center">Contact Us</h2>
+               <p class="text-section-heading text-center">Get a Quote</p>
+               <p class="text-lg text-center">Ready to Barricade Your Lawn and Landscape?</p>
+               <p class="text-red text-center">* = required</p>
+               <!-- <div id="thank-you-page">
             <svg width="168" height="150" viewBox="0 0 168 150" fill="none" xmlns="http://www.w3.org/2000/svg">
               <g clip-path="url(#clip0_79_2)">
                 <path
@@ -248,160 +247,164 @@
             <p class="text-section-heading">Thank You!</p>
             <p class="text-lg text-center">Your quote request has been sent!</p>
             <p class="text-center">Check your inbox for a report of your request. Make sure to check your junk / spam folder if you don't see it soon.</p>
-          </div>
-          <form action="/submit" method="post">
-            <input type="hidden" name="_csrf" id="_csrf" value="<%=csrfToken%>" />
-            <label for="from">
-              Name <span>*</span>
-              <input type="text" name="from" id="from" required />
-            </label>
-            <label for="email">
-              Email <span>*</span>
-              <input type="email" name="email" id="email" autocomplete="email" required />
-            </label>
-            <label for="address">
-              Address <span>*</span>
-              <input type="text" name="address" id="address" autocomplete="address-line1" required />
-            </label>
-            <label for="address2">
-              Address Line 2
-              <input type="text" name="address2" id="address2" autocomplete="address-line2" />
-            </label>
-            <div class="input-group">
-              <label for="city">
-                City <span>*</span>
-                <input type="text" name="city" id="city" autocomplete="address-level2" required />
-              </label>
-              <label for="state">
-                State <span>*</span>
-                <select name="state" id="state" autocomplete="address-level1" required>
-                  <option value="0" disabled>-- SELECT --</option>
-                  <option value="AL">Alabama</option>
-                  <option value="AK">Alaska</option>
-                  <option value="AZ">Arizona</option>
-                  <option value="AR">Arkansas</option>
-                  <option value="CA">California</option>
-                  <option value="CO">Colorado</option>
-                  <option value="CT">Connecticut</option>
-                  <option value="DE">Delaware</option>
-                  <option value="FL" selected>Florida</option>
-                  <option value="GA">Georgia</option>
-                  <option value="HI">Hawaii</option>
-                  <option value="ID">Idaho</option>
-                  <option value="IL">Illinois</option>
-                  <option value="IN">Indiana</option>
-                  <option value="IA">Iowa</option>
-                  <option value="KS">Kansas</option>
-                  <option value="KY">Kentucky</option>
-                  <option value="LA">Louisiana</option>
-                  <option value="ME">Maine</option>
-                  <option value="MD">Maryland</option>
-                  <option value="MA">Massachusetts</option>
-                  <option value="MI">Michigan</option>
-                  <option value="MN">Minnesota</option>
-                  <option value="MS">Mississippi</option>
-                  <option value="MO">Missouri</option>
-                  <option value="MT">Montana</option>
-                  <option value="NE">Nebraska</option>
-                  <option value="NV">Nevada</option>
-                  <option value="NH">New Hampshire</option>
-                  <option value="NJ">New Jersey</option>
-                  <option value="NM">New Mexico</option>
-                  <option value="NY">New York</option>
-                  <option value="NC">North Carolina</option>
-                  <option value="ND">North Dakota</option>
-                  <option value="OH">Ohio</option>
-                  <option value="OK">Oklahoma</option>
-                  <option value="OR">Oregon</option>
-                  <option value="PA">Pennsylvania</option>
-                  <option value="RI">Rhode Island</option>
-                  <option value="SC">South Carolina</option>
-                  <option value="SD">South Dakota</option>
-                  <option value="TN">Tennessee</option>
-                  <option value="TX">Texas</option>
-                  <option value="UT">Utah</option>
-                  <option value="VE">Vermont</option>
-                  <option value="VA">Virginia</option>
-                  <option value="WA">Washington</option>
-                  <option value="WV">West Virginia</option>
-                  <option value="WI">Wisconsin</option>
-                  <option value="WY">Wyoming</option>
-                </select>
-              </label>
-              <label for="zip">
-                ZIP <span>*</span>
-                <input type="number" name="zip" id="zip" required />
-              </label>
+          </div> -->
+               <div id="psa-section" class="visible">
+                  <p class="text-lg text-center">Thank you for your interest in Barricade Lawn and Landscape!</p>
+                  <p class="text-center">Due to technical difficulties, we have had to suspend quote requests for the moment. Check back soon!</p>
+               </div>
+               <!--<form action="/submit" method="post">
+                  <input type="hidden" name="_csrf" id="_csrf" value="<%=csrfToken%>" />
+                  <label for="from">
+                     Name <span>*</span>
+                     <input type="text" name="from" id="from" required />
+                  </label>
+                  <label for="email">
+                     Email <span>*</span>
+                     <input type="email" name="email" id="email" autocomplete="email" required />
+                  </label>
+                  <label for="address">
+                     Address <span>*</span>
+                     <input type="text" name="address" id="address" autocomplete="address-line1" required />
+                  </label>
+                  <label for="address2">
+                     Address Line 2
+                     <input type="text" name="address2" id="address2" autocomplete="address-line2" />
+                  </label>
+                  <div class="input-group">
+                     <label for="city">
+                        City <span>*</span>
+                        <input type="text" name="city" id="city" autocomplete="address-level2" required />
+                     </label>
+                     <label for="state">
+                        State <span>*</span>
+                        <select name="state" id="state" autocomplete="address-level1" required>
+                           <option value="0" disabled>-- SELECT --</option>
+                           <option value="AL">Alabama</option>
+                           <option value="AK">Alaska</option>
+                           <option value="AZ">Arizona</option>
+                           <option value="AR">Arkansas</option>
+                           <option value="CA">California</option>
+                           <option value="CO">Colorado</option>
+                           <option value="CT">Connecticut</option>
+                           <option value="DE">Delaware</option>
+                           <option value="FL" selected>Florida</option>
+                           <option value="GA">Georgia</option>
+                           <option value="HI">Hawaii</option>
+                           <option value="ID">Idaho</option>
+                           <option value="IL">Illinois</option>
+                           <option value="IN">Indiana</option>
+                           <option value="IA">Iowa</option>
+                           <option value="KS">Kansas</option>
+                           <option value="KY">Kentucky</option>
+                           <option value="LA">Louisiana</option>
+                           <option value="ME">Maine</option>
+                           <option value="MD">Maryland</option>
+                           <option value="MA">Massachusetts</option>
+                           <option value="MI">Michigan</option>
+                           <option value="MN">Minnesota</option>
+                           <option value="MS">Mississippi</option>
+                           <option value="MO">Missouri</option>
+                           <option value="MT">Montana</option>
+                           <option value="NE">Nebraska</option>
+                           <option value="NV">Nevada</option>
+                           <option value="NH">New Hampshire</option>
+                           <option value="NJ">New Jersey</option>
+                           <option value="NM">New Mexico</option>
+                           <option value="NY">New York</option>
+                           <option value="NC">North Carolina</option>
+                           <option value="ND">North Dakota</option>
+                           <option value="OH">Ohio</option>
+                           <option value="OK">Oklahoma</option>
+                           <option value="OR">Oregon</option>
+                           <option value="PA">Pennsylvania</option>
+                           <option value="RI">Rhode Island</option>
+                           <option value="SC">South Carolina</option>
+                           <option value="SD">South Dakota</option>
+                           <option value="TN">Tennessee</option>
+                           <option value="TX">Texas</option>
+                           <option value="UT">Utah</option>
+                           <option value="VE">Vermont</option>
+                           <option value="VA">Virginia</option>
+                           <option value="WA">Washington</option>
+                           <option value="WV">West Virginia</option>
+                           <option value="WI">Wisconsin</option>
+                           <option value="WY">Wyoming</option>
+                        </select>
+                     </label>
+                     <label for="zip">
+                        ZIP <span>*</span>
+                        <input type="number" name="zip" id="zip" required />
+                     </label>
+                  </div>
+                  <label for="residential">
+                     Type of Property
+                     <div class="input-group options">
+                        <label for="residential" class="radio-label">
+                           <input type="radio" name="type" id="residential" value="Residential" checked />
+                           Residential
+                        </label>
+                        <label for="commercial" class="radio-label">
+                           Commercial
+                           <input type="radio" name="type" id="commercial" value="Commercial" />
+                        </label>
+                        <label for="both" class="radio-label">
+                           Both
+                           <input type="radio" name="type" id="both" value="Both" />
+                        </label>
+                     </div>
+                  </label>
+                  <label for="phone">
+                     Phone <span>*</span>
+                     <input type="tel" name="phone" id="phone" autocomplete="tel" required />
+                  </label>
+                  <label for="cantext">
+                     <input type="checkbox" name="cantext" id="cantext" />
+                     You can text me at this number
+                  </label>
+                  <label for="comments">
+                     Comments
+                     <textarea name="comments" id="comments"></textarea>
+                  </label>
+                  <label for="how">
+                     How did you hear about us?
+                     <select name="how" id="how">
+                        <option value="social-media">Social Media</option>
+                        <option value="referral">Referral</option>
+                        <option value="website">Website</option>
+                        <option value="other">Other</option>
+                     </select>
+                  </label>
+                  <p id="error-text" class="text-red"></p>
+                  <button type="submit" class="btn full-width">Get your free quote</button>
+               </form>-->
             </div>
-            <label for="residential">
-              Type of Property
-              <div class="input-group options">
-                <label for="residential" class="radio-label">
-                  <input type="radio" name="type" id="residential" value="Residential" checked />
-                  Residential
-                </label>
-                <label for="commercial" class="radio-label">
-                  Commercial
-                  <input type="radio" name="type" id="commercial" value="Commercial" />
-                </label>
-                <label for="both" class="radio-label">
-                  Both
-                  <input type="radio" name="type" id="both" value="Both" />
-                </label>
-              </div>
-            </label>
-            <label for="phone">
-              Phone <span>*</span>
-              <input type="tel" name="phone" id="phone" autocomplete="tel" required />
-            </label>
-            <label for="cantext">
-              <input type="checkbox" name="cantext" id="cantext" />
-              You can text me at this number
-            </label>
-            <label for="comments">
-              Comments
-              <textarea name="comments" id="comments"></textarea>
-            </label>
-            <label for="how">
-              How did you hear about us?
-              <select name="how" id="how">
-                <option value="social-media">Social Media</option>
-                <option value="referral">Referral</option>
-                <option value="website">Website</option>
-                <option value="other">Other</option>
-              </select>
-            </label>
-            <p id="error-text" class="text-red"></p>
-            <button type="submit" class="btn full-width">Get your free quote</button>
-          </form>
-        </div>
-      </section>
-      <section id="faqs" class="background">
-        <div class="text-container">
-          <h2 class="text-section-heading text-center">Frequently Asked Questions</h2>
-          <% for (let i = 0; i < faqList.length; ++i) { %>
-          <details>
-            <summary class="text-lg">
-              <%= faqList[i].name %>
-              <svg width="22" height="13" viewBox="0 0 22 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1.75 2.25L10.7429 11.2429C10.7468 11.2468 10.7532 11.2468 10.7571 11.2429L19.75 2.25" stroke="white" stroke-width="3" stroke-linecap="round" />
-              </svg>
-            </summary>
-            <p><%= faqList[i].acceptedAnswer.text %></p>
-          </details>
-          <hr />
-          <% } %>
-        </div>
-      </section>
-    </main>
-    <script type="application/ld+json">
-      <%- faqSchema %>
-    </script>
-    <footer>
-      <div class="text-container">
-        <p>Call us at <a href="tel:7273313591">(727) 331-3591</a></p>
-        <p>Website by <a href="https://www.linkedin.com/in/isaac-maddox/" target="_blank">Isaac Maddox</a></p>
-      </div>
-    </footer>
-  </body>
+         </section>
+         <section id="faqs" class="background">
+            <div class="text-container">
+               <h2 class="text-section-heading text-center">Frequently Asked Questions</h2>
+               <% for (let i = 0; i < faqList.length; ++i) { %>
+               <details>
+                  <summary class="text-lg">
+                     <%= faqList[i].name %>
+                     <svg width="22" height="13" viewBox="0 0 22 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1.75 2.25L10.7429 11.2429C10.7468 11.2468 10.7532 11.2468 10.7571 11.2429L19.75 2.25" stroke="white" stroke-width="3" stroke-linecap="round" />
+                     </svg>
+                  </summary>
+                  <p><%= faqList[i].acceptedAnswer.text %></p>
+               </details>
+               <hr />
+               <% } %>
+            </div>
+         </section>
+      </main>
+      <script type="application/ld+json">
+         <%- faqSchema %>
+      </script>
+      <footer>
+         <div class="text-container">
+            <p>Call us at <a href="tel:7273313591">(727) 331-3591</a></p>
+            <p>Website by <a href="https://www.linkedin.com/in/isaac-maddox/" target="_blank">Isaac Maddox</a></p>
+         </div>
+      </footer>
+   </body>
 </html>
