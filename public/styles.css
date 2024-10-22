@@ -388,7 +388,8 @@ form {
     }
 }
 
-#thank-you-page {
+#thank-you-page,
+#psa-section {
     flex-direction: column;
     align-items: center;
     border-radius: 16px;
