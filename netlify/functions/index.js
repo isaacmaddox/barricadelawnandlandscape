@@ -100,6 +100,11 @@ router.get('/', csrfProtection, (req, res) => {
 router.post('/submit', upload.none(), csrfProtection, async (req, res) => {
     // Clean out any HTML entered by users
     const body = sanitizeBody(req.body);
+    if (req.cookies["quote-request"]) {
+        return res.status(403).json({
+            message: "You can't send another request right now",
+        })
+    }
 
     let { data, error } = await resend.emails.send({
         from: `${body.from} <${process.env.REQ_FROM_EMAIL}>`,
@@ -124,7 +129,9 @@ router.post('/submit', upload.none(), csrfProtection, async (req, res) => {
         html: generateReport(body),
     });
 
-    res.send({ message: "Quote request sent.", request: data, report: reportData });
+    res.cookie("quote-request", new Date().toString(), {
+        maxAge: 86400 * 1000
+    }).send({ message: "Quote request sent.", request: data, report: reportData });
 })
 
 // Handle CSRF errors, respond with valid JSON
