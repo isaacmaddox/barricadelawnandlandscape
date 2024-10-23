@@ -1,5 +1,5 @@
 [functions]
-  external_node_modules = ["express", "csurf", "cookie-parser", "serverless-http", "ejs", "resend", "dotenv", "multer"]
+  external_node_modules = ["express", "csurf", "cookie-parser", "serverless-http", "ejs", "resend", "dotenv", "multer", "morgan"]
   node_bundler = "esbuild"
   included_files = ["page_views/*", "email_templates/*", "public/images/carousel/*"]
 # Necessary because express.static('public') wasn't working as intended when mixing with Netlify

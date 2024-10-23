@@ -8,6 +8,7 @@ const serverless = require('serverless-http');
 const multer = require('multer');
 const fs = require('fs');
 const crypto = require('crypto');
+const morgan = require("morgan");
 
 const app = express();
 const upload = multer();
@@ -153,6 +154,7 @@ router.use((err, _, res, next) => {
     res.status(403).send({ error: "Bad CSRF token provided." });
 })
 
+app.use(morgan("[:method] :path (:status) - :remote-addr"));
 app.use(express.json());
 app.use(cookieParser());
 app.use('/', router);
