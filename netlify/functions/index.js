@@ -141,10 +141,7 @@ router.post('/submit', upload.none(), csrfProtection, async (req, res) => {
         html: generateReport(body),
     });
 
-    res.cookie("quote-request", new Date().toString(), {
-        maxAge: 86400 * 1000,
-        httpOnly: true,
-    }).send({ message: "Quote request sent.", request: data, report: reportData });
+    res.send({ message: "Quote request sent.", request: data, report: reportData });
 })
 
 // Handle CSRF errors, respond with valid JSON
