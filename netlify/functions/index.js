@@ -151,7 +151,7 @@ router.use((err, _, res, next) => {
     res.status(403).send({ error: "Bad CSRF token provided." });
 })
 
-app.use(morgan("[:method] :path (:status) - :remote-addr"));
+app.use(morgan(":remote-addr: [:method] :url (:status)"));
 app.use(express.json());
 app.use(cookieParser());
 app.use('/', router);
