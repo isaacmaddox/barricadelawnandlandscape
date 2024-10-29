@@ -667,7 +667,7 @@ textarea {
 
 .image-carousel {
     display: flex;
-    height: 250px;
+    height: 325px;
     gap: 1rem;
     margin-inline: 4rem;
     margin-top: calc(var(--section-spacing) / 2);
@@ -675,7 +675,7 @@ textarea {
 
     & img {
         flex-shrink: 0;
-        min-width: 325px;
+        min-width: 250px;
         object-fit: cover;
         object-position: center;
         border-radius: 4px;
@@ -684,11 +684,11 @@ textarea {
 
 @media (width < 1024px) {
     .image-carousel {
-        height: 200px;
+        height: min(350px, 65svh);
         margin-inline: 1rem;
 
         & img {
-            min-width: 225px;
+            max-width: 100%;
         }
     }
 }
