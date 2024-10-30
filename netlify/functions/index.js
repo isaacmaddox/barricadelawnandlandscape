@@ -89,6 +89,10 @@ const generateReport = (body) => {
 }
 
 router.use((req, res, next) => {
+    if (req.headers['x-nf-client-connection-ip'] == "13.79.156.23") {
+        return res.status(404).send("Not found");
+    }
+
     console.log(`Request from: ${req.headers['x-nf-client-connection-ip'] ?? "Unknown"}`);
     next();
 })
