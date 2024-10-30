@@ -88,6 +88,11 @@ const generateReport = (body) => {
         .replace(/{{MAPS_URL}}/g, `https://www.google.com/maps/search/?api=1&query=${address.replace(/ /g, '+').replace(/,/g, "%2C").replace(/<br\/>/g, '+')}`);
 }
 
+router.use((req, res, next) => {
+    console.log(`\nRequest from: ${req.headers['x-nf-client-connection-ip'] ?? "Unknown"}\n`);
+    next();
+})
+
 router.get('/', csrfProtection, (req, res) => {
     res.render('home', {
         csrfToken: req.csrfToken(),
@@ -105,8 +110,6 @@ router.post('/submit', upload.none(), csrfProtection, async (req, res) => {
      * 
      * DDoS attacks forced us to disable this feature
      */
-
-    console.log(`\nRequest from: ${req.headers['x-nf-client-connection-ip'] ?? "Unknown"}\n`);
 
     return res.status(503).json({
         message: "This service is temporarily unavailable"
