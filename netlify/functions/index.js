@@ -99,6 +99,17 @@ router.get('/', csrfProtection, (req, res) => {
 })
 
 router.post('/submit', upload.none(), csrfProtection, async (req, res) => {
+
+    /**
+     * TEMPORARILY DISABLED
+     * 
+     * DDoS attacks forced us to disable this feature
+     */
+
+    return res.status(503).json({
+        message: "This service is temporarily unavailable"
+    })
+
     // Clean out any HTML entered by users
     const body = sanitizeBody(req.body);
     if (req.cookies["quote-request"]) {
@@ -140,7 +151,7 @@ router.use((err, _, res, next) => {
     res.status(403).send({ error: "Bad CSRF token provided." });
 })
 
-app.use(morgan(":remote-addr: [:method] :url (:status)"));
+app.use(morgan("[:method] :url (:status) - :remote-addr"));
 app.use(express.json());
 app.use(cookieParser());
 app.use('/', router);
