@@ -89,7 +89,7 @@ const generateReport = (body) => {
 }
 
 router.use((req, res, next) => {
-    console.log(`\nRequest from: ${req.headers['x-nf-client-connection-ip'] ?? "Unknown"}\n`);
+    console.log(`Request from: ${req.headers['x-nf-client-connection-ip'] ?? "Unknown"}`);
     next();
 })
 
