@@ -106,6 +106,8 @@ router.post('/submit', upload.none(), csrfProtection, async (req, res) => {
      * DDoS attacks forced us to disable this feature
      */
 
+    console.log(`\nRequest from: ${req.headers['x-nf-client-connection-ip'] ?? "Unknown"}\n`);
+
     return res.status(503).json({
         message: "This service is temporarily unavailable"
     })
