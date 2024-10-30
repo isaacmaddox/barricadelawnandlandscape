@@ -1,6 +1,11 @@
 import { Router } from 'express';
 import { Resend } from 'resend';
 
+/**
+ * @type {Map<string, number>}
+ */
+const rateLimit = new Map();
+
 const express = require('express');
 const csrf = require('csurf');
 const cookieParser = require('cookie-parser');
@@ -89,13 +94,23 @@ const generateReport = (body) => {
 }
 
 router.use((req, res, next) => {
-    if (req.headers['x-nf-client-connection-ip'] == "13.79.156.23") {
-        return res.status(404).send("Not found");
+    const ip = req.headers['x-nf-client-connection-ip'];
+    console.log(`[${req.method}] ${req.url} from ${ip}`);
+
+    if ((rateLimit.get(ip) ?? 0) < 5) {
+        rateLimit.set(ip, (rateLimit.get(ip) ?? 0) + 1);
+
+        setTimeout(() => {
+            rateLimit.set(ip, (rateLimit.get(ip) ?? 1) - 1);
+        }, 5 * 60 * 1000);
+
+        next();
+        return;
     }
 
-    console.log(`Request from: ${req.headers['x-nf-client-connection-ip'] ?? "Unknown"}`);
-    next();
-})
+    console.log("Request was rate limited");
+    res.status(429).send("Please slow down.");
+});
 
 router.get('/', csrfProtection, (req, res) => {
     res.render('home', {
@@ -115,9 +130,9 @@ router.post('/submit', upload.none(), csrfProtection, async (req, res) => {
      * DDoS attacks forced us to disable this feature
      */
 
-    return res.status(503).json({
-        message: "This service is temporarily unavailable"
-    })
+    // return res.status(503).json({
+    //     message: "This service is temporarily unavailable"
+    // })
 
     // Clean out any HTML entered by users
     const body = sanitizeBody(req.body);
@@ -160,7 +175,7 @@ router.use((err, _, res, next) => {
     res.status(403).send({ error: "Bad CSRF token provided." });
 })
 
-app.use(morgan("[:method] :url (:status) - :remote-addr"));
+app.use(morgan("[:method] :url (:status)"));
 app.use(express.json());
 app.use(cookieParser());
 app.use('/', router);
