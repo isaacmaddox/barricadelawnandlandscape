@@ -130,7 +130,7 @@ export class EmailService {
    }
 
    async #sendReport(newBody) {
-      this.#resend.emails.send({
+      await this.#resend.emails.send({
          from: `Barricade Lawn and Landscpae <${process.env.CONF_FROM_EMAIL}>`,
          to: [newBody.email],
          reply_to: process.env.REQ_TO_EMAIL,
