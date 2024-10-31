@@ -105,11 +105,11 @@ const generateReport = (body) => {
       );
 };
 
-router.use((req, res, next) => {
+function rateLimit(req, res, next) {
    const ip = req.headers["x-nf-client-connection-ip"];
    console.log(`[${req.method}] ${req.url} from ${ip}`);
 
-   if ((rateLimit.get(ip) ?? 0) < 5 && req.url !== "/") {
+   if ((rateLimit.get(ip) ?? 0) < 5) {
       rateLimit.set(ip, (rateLimit.get(ip) ?? 0) + 1);
 
       setTimeout(() => {
@@ -122,7 +122,7 @@ router.use((req, res, next) => {
 
    console.log("Request was rate limited");
    res.status(429).send("Please slow down.");
-});
+}
 
 router.get("/", csrfProtection, (req, res) => {
    res.render("home", {
@@ -134,7 +134,7 @@ router.get("/", csrfProtection, (req, res) => {
    });
 });
 
-router.post("/submit", upload.none(), csrfProtection, async (req, res) => {
+router.post("/submit", rateLimit, upload.none(), csrfProtection, async (req, res) => {
    /**
     * TEMPORARILY DISABLED
     *
