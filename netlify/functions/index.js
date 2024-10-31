@@ -2,9 +2,9 @@ import { Router } from "express";
 import { Resend } from "resend";
 
 /**
- * @type {Map<string, number>}
+ * @type {Set<string>}
  */
-const rateLimit = new Map();
+const rateLimit = new Set();
 
 const express = require("express");
 const csrf = require("csurf");
@@ -105,16 +105,17 @@ const generateReport = (body) => {
       );
 };
 
-function rateLimit(req, res, next) {
+function rateLimitMw(req, res, next) {
    const ip = req.headers["x-nf-client-connection-ip"];
    console.log(`[${req.method}] ${req.url} from ${ip}`);
 
-   if ((rateLimit.get(ip) ?? 0) < 5) {
-      rateLimit.set(ip, (rateLimit.get(ip) ?? 0) + 1);
+   if (rateLimit.has(ip)) {
+      rateLimit.add(ip);
 
+      // One request per 10 minutes
       setTimeout(() => {
-         rateLimit.set(ip, (rateLimit.get(ip) ?? 1) - 1);
-      }, 5 * 60 * 1000);
+         rateLimit.delete(ip);
+      }, 10 * 60 * 1000);
 
       next();
       return;
@@ -134,7 +135,7 @@ router.get("/", csrfProtection, (req, res) => {
    });
 });
 
-router.post("/submit", rateLimit, upload.none(), csrfProtection, async (req, res) => {
+router.post("/submit", rateLimitMw, upload.none(), csrfProtection, async (req, res) => {
    /**
     * TEMPORARILY DISABLED
     *
