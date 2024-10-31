@@ -1,4 +1,5 @@
 import express from "express";
+import { middleware } from "./middleware";
 
 export class BLLRouter {
    #schema;
@@ -9,8 +10,9 @@ export class BLLRouter {
    /**
     * @param {string} schema
     * @param {string[]} images
+    * @param {import("./middleware").Middleware}
     */
-   constructor(schema, images) {
+   constructor(schema, images, middleware) {
       this.#images = images;
       this.#schema = schema;
       this.#faqList = JSON.parse(schema).mainEntity;
@@ -26,6 +28,10 @@ export class BLLRouter {
             faqList: this.#faqList,
             isProduction: process.env.ENVIRONMENT === "production",
          });
+      });
+
+      this.router.post("/submit", middleware.rateLimit(1, 10), (req, res) => {
+         // res.redirect("/");
       });
    }
 }
