@@ -124,12 +124,6 @@ export class EmailService {
          return false;
       }
 
-      this.#sendReport(newBody);
-
-      return true;
-   }
-
-   async #sendReport(newBody) {
       await this.#resend.emails.send({
          from: `Barricade Lawn and Landscpae <${process.env.CONF_FROM_EMAIL}>`,
          to: [newBody.email],
@@ -137,5 +131,7 @@ export class EmailService {
          subject: "Confirmation of Request",
          html: this.#render("conf", newBody)
       });
+
+      return true;
    }
 }
