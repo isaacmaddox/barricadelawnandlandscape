@@ -109,7 +109,7 @@ function rateLimitMw(req, res, next) {
    const ip = req.headers["x-nf-client-connection-ip"];
    console.log(`[${req.method}] ${req.url} from ${ip}`);
 
-   if (rateLimit.has(ip)) {
+   if (!rateLimit.has(ip)) {
       rateLimit.add(ip);
 
       // One request per 10 minutes
