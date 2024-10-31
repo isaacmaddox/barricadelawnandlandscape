@@ -21,13 +21,21 @@ const onPageLoad = () => {
         submitButton.disabled = true;
         submitButton.textContent = "Sending request...";
         errorText.textContent = "";
+        const body = {};
+
+        data.forEach((value, key) => {
+            body[key] = value;
+        });
 
         console.log(data);
 
         fetch(apiURL, {
             method: 'post',
             credentials: 'same-origin',
-            body: data
+            body: JSON.stringify(body),
+            headers: {
+                "Content-Type": "application/json"
+            }
         })
             .then(res => res.json().then(response => {
                 response.status = res.status;

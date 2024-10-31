@@ -1,7 +1,7 @@
 import express from "express";
 import { engine } from "express-handlebars";
 import fs from "fs";
-import { middleware } from "./middleware";
+import { Middleware } from "./middleware";
 import { BLLRouter } from "./router";
 
 const faqSchema = fs.readFileSync("src/views/faqs.json").toString("utf-8");
@@ -25,11 +25,12 @@ app.engine(
 );
 app.set("view engine", ".hbs");
 app.set("views", "src/views");
-app.use(express.urlencoded({ extended: true }));
 
-const Router = new BLLRouter(faqSchema, imageList);
+const middleware = new Middleware();
+const Router = new BLLRouter(faqSchema, imageList, middleware);
 
 app.use(middleware.removePoweredBy);
 app.use(Router.router);
+app.use(middleware.errors);
 
 export default app;
