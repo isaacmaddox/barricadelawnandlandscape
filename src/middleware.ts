@@ -1,37 +1,27 @@
-/**
- * @typedef {import("express").Handler} Handler
- * @typedef {import("express").ErrorRequestHandler} ErrorHandler
- */
+import { ErrorRequestHandler, NextFunction, Request, Response } from "express";
+
+interface IpMap {
+   count: number;
+   timestamps: number[];
+}
+
+interface RouteMap {
+   [key: string]: Map<string, IpMap>;
+}
 
 export class Middleware {
-   /**
-    * @type {{ [key: string]: Map<string, number> }}
-    */
-   ips = {};
+   ips: RouteMap = {};
 
-   /**
-    * Remove the `X-Powered-By` header from responses
-    * to avoid exposing the backend service to attackers
-    *
-    * @type {Handler}
-    */
-   removePoweredBy(req, res, next) {
-      res.setHeader("X-Powered-By", null);
+   removePoweredBy(req: Request, res: Response, next: NextFunction) {
+      res.setHeader("X-Powered-By", "");
       next();
    }
 
-   /**
-    * Implement rate limiting on a specific route
-    *
-    * @type {(allowedRequests: number, rollingTime: number) => Handler,}
-    * @param allowedRequests The number of legal requests for the rate limit
-    * @param rollingTime The time, in minutes, for the rolling period
-    */
-   rateLimit(allowedRequests, rollingTime) {
-      return (req, res, next) => {
-         const ip = req.headers["x-nf-client-connection-ip"] || req.ip;
+   rateLimit(allowedRequests: number, rollingTime: number) {
+      return (req: Request, res: Response, next: NextFunction) => {
+         const ip = (req.headers["x-nf-client-connection-ip"] as string) || (req.ip as string);
 
-         if (ip === "::1" || ip === "127.0.0.1") return next();
+         // if (ip === "::1" || ip === "127.0.0.1") return next();
 
          if (!this.ips[req.url]) {
             this.ips[req.url] = new Map();
@@ -64,17 +54,13 @@ export class Middleware {
       };
    }
 
-   /**
-    * Handle errors with the app
-    *
-    * @type {ErrorHandler}
-    */
-   errors(err, req, res, next) {
+   errors: ErrorRequestHandler = (err, req, res, next) => {
       if (err instanceof Error) {
-         return res.status(500).json({
+         res.status(500).json({
             status: "error",
             message: err.message,
          });
+         return;
       }
 
       res.status(500).json({
@@ -82,5 +68,5 @@ export class Middleware {
          message: "Something went wrong",
          diagnostics: err,
       });
-   }
+   };
 }

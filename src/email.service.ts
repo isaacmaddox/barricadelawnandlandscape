@@ -1,19 +1,17 @@
-/**
- * @typedef {{
- *    name: string;
- *    email: string;
- *    address: string;
- *    address2: string;
- *    city: string;
- *    state: string;
- *    zip: string;
- *    propertyType: string;
- *    phone: string;
- *    cantext: string;
- *    comments: string;
- *    how: string;
- * }} QuoteFormBody
- */
+interface QuoteFormBody {
+   from: string;
+   email: string;
+   address: string;
+   address2: string;
+   city: string;
+   state: string;
+   zip: string;
+   type: string;
+   phone: string;
+   cantext: string;
+   comments: string;
+   how: string;
+}
 
 import { Resend } from "resend";
 import fs from "fs";
@@ -31,13 +29,7 @@ export class EmailService {
    #requestTemplate = fs.readFileSync("email_templates/quote_request.html").toString("utf-8");
    #confirmTemplate = fs.readFileSync("email_templates/request_confirmation.html").toString("utf-8");
 
-   /**
-    * Render one of the email templates with the appropriate data
-    *
-    * @param {"request" | "conf"} template
-    * @param {QuoteFormBody} body
-    */
-   #render(template, body) {
+   #render(template: "request" | "conf", body: QuoteFormBody): string {
       let address;
 
       if (body.address2 !== "") {
@@ -68,15 +60,8 @@ export class EmailService {
       );
    }
 
-   /**
-    * Sanitize the body provided by the user to prevent injection
-    * in email templates
-    *
-    * @param {string} body The raw data from the POST request
-    * @returns A sanitized version of the body
-    */
-   #sanitize(body) {
-      let newBody = {};
+   #sanitize(body: QuoteFormBody): QuoteFormBody {
+      let newBody: QuoteFormBody = body;
 
       for (const key of Object.keys(body)) {
          newBody[key] = body[key].replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/\n/g, "<br/>");
@@ -85,16 +70,10 @@ export class EmailService {
       return newBody;
    }
 
-   /**
-    * Send sanitized emails based on the form POST
-    *
-    * @param {QuoteFormBody} body The raw data from the POST request
-    * @returns {Promise<boolean>} If successful
-    */
-   async sendEmail(body) {
+   async sendEmail(body: QuoteFormBody): Promise<boolean> {
       const newBody = this.#sanitize(body);
 
-      let { data, error } = await this.#resend.emails.send({
+      const { error } = await this.#resend.emails.send({
          from: `${newBody.from} <${process.env.REQ_FROM_EMAIL}>`,
          to: [process.env.REQ_TO_EMAIL],
          reply_to: newBody.email,
@@ -114,7 +93,7 @@ export class EmailService {
       return true;
    }
 
-   async #sendReport(newBody) {
+   async #sendReport(newBody: QuoteFormBody) {
       this.#resend.emails.send({
          from: `Barricade Lawn and Landscpae <${process.env.CONF_FROM_EMAIL}>`,
          to: [newBody.email],
