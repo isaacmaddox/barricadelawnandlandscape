@@ -3,7 +3,7 @@ import { engine } from "express-handlebars";
 import fs from "fs";
 import { Middleware } from "./middleware";
 import { BLLRouter } from "./router";
-
+import morgan from "morgan";
 const faqSchema = fs.readFileSync("src/views/faqs.json").toString("utf-8");
 const imageList = [
    "AA_truck.jpg",
@@ -29,6 +29,16 @@ app.set("views", "src/views");
 const middleware = new Middleware();
 const Router = new BLLRouter(faqSchema, imageList, middleware);
 
+app.use(
+   morgan(function (tokens, req, res) {
+      return [
+         `${req.headers["x-nf-client-connection-ip"]} -`,
+         `[${tokens.method(req, res)}]`,
+         tokens.url(req, res),
+         `(${tokens.status(req, res)})`,
+      ].join(" ");
+   })
+);
 app.use(middleware.removePoweredBy);
 app.use(Router.router);
 app.use(middleware.errors);
