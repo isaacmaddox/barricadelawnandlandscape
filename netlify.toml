@@ -1,13 +1,13 @@
 [functions]
-  external_node_modules = ["express", "csurf", "cookie-parser", "serverless-http", "ejs", "resend", "dotenv", "multer", "morgan"]
+  external_node_modules = ["cookie-parser", "csurf", "express", "express-handlebars", "morgan", "resend", "serverless-http"]
   node_bundler = "esbuild"
-  included_files = ["page_views/*", "email_templates/*", "public/images/carousel/*"]
+  included_files = ["src/**", "email_templates/*"]
 # Necessary because express.static('public') wasn't working as intended when mixing with Netlify
 [[redirects]]
   force = true
   from = "/public/*"
   status = 200
-  to = "/public/:splat"
+  to = "/src/public/:splat"
 [[redirects]]
   force = true
   from = "/images/carousel/:url"
