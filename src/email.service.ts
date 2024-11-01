@@ -25,12 +25,12 @@ const howOptions = {
 };
 
 export class EmailService {
-   #resend = new Resend(process.env.RESEND_KEY);
-   #requestTemplate = fs.readFileSync("email_templates/quote_request.html").toString("utf-8");
-   #confirmTemplate = fs.readFileSync("email_templates/request_confirmation.html").toString("utf-8");
+   private resend = new Resend(process.env.RESEND_KEY);
+   private requestTemplate = fs.readFileSync("email_templates/quote_request.html").toString("utf-8");
+   private confirmTemplate = fs.readFileSync("email_templates/request_confirmation.html").toString("utf-8");
 
-   #render(template: "request" | "conf", body: QuoteFormBody): string {
-      let address;
+   private render(template: "request" | "conf", body: QuoteFormBody): string {
+      let address: string;
 
       if (body.address2 !== "") {
          address = body.address + "<br/>" + body.address2 + "<br/>" + body.city + ", " + body.state + " " + body.zip;
@@ -56,11 +56,11 @@ export class EmailService {
 
       return Object.entries(replacements).reduce(
          (template, [key, value]) => template.replace(new RegExp(key, "g"), value),
-         template === "request" ? this.#requestTemplate : this.#confirmTemplate
+         template === "request" ? this.requestTemplate : this.confirmTemplate
       );
    }
 
-   #sanitize(body: QuoteFormBody): QuoteFormBody {
+   private sanitize(body: QuoteFormBody): QuoteFormBody {
       let newBody: QuoteFormBody = body;
 
       for (const key of Object.keys(body)) {
@@ -71,14 +71,14 @@ export class EmailService {
    }
 
    async sendEmail(body: QuoteFormBody): Promise<boolean> {
-      const newBody = this.#sanitize(body);
+      const newBody = this.sanitize(body);
 
-      const { error } = await this.#resend.emails.send({
+      const { error } = await this.resend.emails.send({
          from: `${newBody.from} <${process.env.REQ_FROM_EMAIL}>`,
-         to: [process.env.REQ_TO_EMAIL],
+         to: [process.env.REQ_TO_EMAIL as string],
          reply_to: newBody.email,
          subject: "Quote Request",
-         html: this.#render("request", newBody),
+         html: this.render("request", newBody),
          headers: {
             "X-Entity-Ref-ID": randomUUID(),
          },
@@ -88,18 +88,18 @@ export class EmailService {
          return false;
       }
 
-      this.#sendReport(newBody);
+      this.sendReport(newBody);
 
       return true;
    }
 
-   async #sendReport(newBody: QuoteFormBody) {
-      this.#resend.emails.send({
+   private async sendReport(newBody: QuoteFormBody) {
+      this.resend.emails.send({
          from: `Barricade Lawn and Landscpae <${process.env.CONF_FROM_EMAIL}>`,
          to: [newBody.email],
          reply_to: process.env.REQ_TO_EMAIL,
          subject: "Confirmation of Request",
-         html: this.#render("conf", newBody),
+         html: this.render("conf", newBody),
       });
    }
 }

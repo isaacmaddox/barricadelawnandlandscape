@@ -10,7 +10,7 @@ interface RouteMap {
 }
 
 export class Middleware {
-   ips: RouteMap = {};
+   private ips: RouteMap = {};
 
    removePoweredBy(req: Request, res: Response, next: NextFunction) {
       res.setHeader("X-Powered-By", "");
