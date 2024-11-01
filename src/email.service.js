@@ -33,9 +33,9 @@ export class EmailService {
 
    /**
     * Render one of the email templates with the appropriate data
-    * 
-    * @param {"request" | "conf"} template 
-    * @param {QuoteFormBody} body 
+    *
+    * @param {"request" | "conf"} template
+    * @param {QuoteFormBody} body
     */
    #render(template, body) {
       let address;
@@ -46,47 +46,32 @@ export class EmailService {
          address = body.address + "<br/>" + body.city + ", " + body.state + " " + body.zip;
       }
 
-      if (template === "request") {
-         return this.#requestTemplate
-            .replace(/{{NAME}}/g, body.from)
-            .replace(/{{ADDRESS}}/g, address)
-            .replace(/{{EMAIL}}/g, body.email)
-            .replace(/{{PHONE}}/g, body.phone)
-            .replace(/{{CANTEXT}}/g, body.cantext ? "can" : "can not")
-            .replace(/{{COMMENTS}}/g, body.comments)
-            .replace(/{{HOW}}/g, howOptions[body.how] ?? "Unknown")
-            .replace(/{{TYPE}}/g, body.type[0].toUpperCase() + body.type.slice(1))
-            .replace(
-               /{{MAPS_URL}}/g,
-               `https://www.google.com/maps/search/?api=1&query=${address
-                  .replace(/ /g, "+")
-                  .replace(/,/g, "%2C")
-                  .replace(/<br\/>/g, "+")}`
-            );
-      } else {
-         return this.#confirmTemplate
-            .replace(/{{NAME}}/g, body.from)
-            .replace(/{{ADDRESS}}/g, address)
-            .replace(/{{EMAIL}}/g, body.email)
-            .replace(/{{PHONE}}/g, body.phone)
-            .replace(/{{CANTEXT}}/g, body.cantext ? "can" : "can not")
-            .replace(/{{COMMENTS}}/g, body.comments)
-            .replace(/{{HOW}}/g, howOptions[body.how] ?? "Unknown")
-            .replace(/{{TYPE}}/g, body.type[0].toUpperCase() + body.type.slice(1))
-            .replace(
-               /{{MAPS_URL}}/g,
-               `https://www.google.com/maps/search/?api=1&query=${address
-                  .replace(/ /g, "+")
-                  .replace(/,/g, "%2C")
-                  .replace(/<br\/>/g, "+")}`
-            );
-      }
+      const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${address
+         .replace(/ /g, "+")
+         .replace(/,/g, "%2C")
+         .replace(/<br\/>/g, "+")}`;
+      const replacements = {
+         "{{NAME}}": body.from,
+         "{{ADDRESS}}": address,
+         "{{EMAIL}}": body.email,
+         "{{PHONE}}": body.phone,
+         "{{CANTEXT}}": body.cantext ? "can" : "can not",
+         "{{COMMENTS}}": body.comments,
+         "{{HOW}}": howOptions[body.how] ?? "Unknown",
+         "{{TYPE}}": body.type[0].toUpperCase() + body.type.slice(1),
+         "{{MAPS_URL}}": mapsUrl,
+      };
+
+      return Object.entries(replacements).reduce(
+         (template, [key, value]) => template.replace(new RegExp(key, "g"), value),
+         template === "request" ? this.#requestTemplate : this.#confirmTemplate
+      );
    }
 
    /**
     * Sanitize the body provided by the user to prevent injection
     * in email templates
-    * 
+    *
     * @param {string} body The raw data from the POST request
     * @returns A sanitized version of the body
     */
@@ -94,7 +79,7 @@ export class EmailService {
       let newBody = {};
 
       for (const key of Object.keys(body)) {
-         newBody[key] = body[key].replace(/>/g, '&gt;').replace(/</g, '&lt;').replace(/\n/g, '<br/>');
+         newBody[key] = body[key].replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/\n/g, "<br/>");
       }
 
       return newBody;
@@ -102,7 +87,7 @@ export class EmailService {
 
    /**
     * Send sanitized emails based on the form POST
-    * 
+    *
     * @param {QuoteFormBody} body The raw data from the POST request
     * @returns {Promise<boolean>} If successful
     */
@@ -116,8 +101,8 @@ export class EmailService {
          subject: "Quote Request",
          html: this.#render("request", newBody),
          headers: {
-            "X-Entity-Ref-ID": randomUUID()
-         }
+            "X-Entity-Ref-ID": randomUUID(),
+         },
       });
 
       if (error) {
@@ -135,7 +120,7 @@ export class EmailService {
          to: [newBody.email],
          reply_to: process.env.REQ_TO_EMAIL,
          subject: "Confirmation of Request",
-         html: this.#render("conf", newBody)
+         html: this.#render("conf", newBody),
       });
    }
 }

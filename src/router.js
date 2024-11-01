@@ -47,13 +47,13 @@ export class BLLRouter {
             if (success) {
                res.status(200).json({
                   status: "success",
-                  message: "Quote request sent"
+                  message: "Quote request sent",
                });
             } else {
                res.status(500).json({
                   status: "error",
-                  message: "Something went wrong"
-               })
+                  message: "Something went wrong",
+               });
             }
          } catch (err) {
             next(err);

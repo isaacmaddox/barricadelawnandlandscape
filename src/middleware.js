@@ -12,7 +12,7 @@ export class Middleware {
    /**
     * Remove the `X-Powered-By` header from responses
     * to avoid exposing the backend service to attackers
-    * 
+    *
     * @type {Handler}
     */
    removePoweredBy(req, res, next) {
@@ -22,57 +22,65 @@ export class Middleware {
 
    /**
     * Implement rate limiting on a specific route
-    * 
+    *
     * @type {(allowedRequests: number, rollingTime: number) => Handler,}
     * @param allowedRequests The number of legal requests for the rate limit
     * @param rollingTime The time, in minutes, for the rolling period
     */
    rateLimit(allowedRequests, rollingTime) {
       return (req, res, next) => {
+         const ip = req.headers["x-nf-client-connection-ip"] || req.ip;
+
+         if (ip === "::1" || ip === "127.0.0.1") return next();
+
          if (!this.ips[req.url]) {
-            console.log("Making map");
             this.ips[req.url] = new Map();
          }
 
          const map = this.ips[req.url];
-         const ip = req.headers["x-nf-client-connection-ip"];
+         const now = Date.now();
+         const requestData = map.get(ip) || { count: 0, timestamps: [] };
 
-         if (ip === "::1") return next();
+         requestData.timestamps = requestData.timestamps.filter(
+            (timestamp) => now - timestamp < rollingTime * 60 * 1000
+         );
 
-         if ((map.get(ip) ?? 0) < allowedRequests) {
-            map.set(ip, (map.get(ip) ?? 0) + 1);
+         requestData.count = requestData.timestamps.length;
 
-            setTimeout(() => {
-               map.set(ip, (map.get(ip) ?? 0) - 1);
-            }, rollingTime * 60 * 1000);
-
+         if (requestData.count < allowedRequests) {
+            requestData.timestamps.push(now);
+            requestData.count++;
+            map.set(ip, requestData);
             return next();
          }
 
          res.status(429).json({
             status: "fail",
-            message: "Too many requests. Please slow down",
+            data: {
+               message: "Too many requests. Please slow down",
+               retryAfter: Math.ceil((requestData.timestamps[0] + rollingTime * 60 * 1000 - now) / 1000),
+            },
          });
       };
    }
 
    /**
     * Handle errors with the app
-    * 
+    *
     * @type {ErrorHandler}
     */
    errors(err, req, res, next) {
       if (err instanceof Error) {
          return res.status(500).json({
             status: "error",
-            message: err.message
-         })
+            message: err.message,
+         });
       }
 
       res.status(500).json({
          status: "error",
          message: "Something went wrong",
-         diagnostics: err
+         diagnostics: err,
       });
    }
 }
