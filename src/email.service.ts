@@ -88,18 +88,14 @@ export class EmailService {
          return false;
       }
 
-      this.sendReport(newBody);
-
-      return true;
-   }
-
-   private async sendReport(newBody: QuoteFormBody) {
-      this.resend.emails.send({
+      await this.resend.emails.send({
          from: `Barricade Lawn and Landscpae <${process.env.CONF_FROM_EMAIL}>`,
          to: [newBody.email],
          reply_to: process.env.REQ_TO_EMAIL,
          subject: "Confirmation of Request",
          html: this.render("conf", newBody),
       });
+
+      return true;
    }
 }
