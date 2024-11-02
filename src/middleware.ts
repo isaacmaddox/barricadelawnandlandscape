@@ -22,8 +22,6 @@ export class Middleware {
       return (req: Request, res: Response, next: NextFunction) => {
          const ip = (req.headers["x-nf-client-connection-ip"] as string) || (req.ip as string);
 
-         // if (ip === "::1" || ip === "127.0.0.1") return next();
-
          if (!this.ips[req.url]) {
             this.ips[req.url] = new Map();
          }
@@ -56,6 +54,19 @@ export class Middleware {
    }
 
    errors: ErrorRequestHandler = (err, req, res, next) => {
+      const ip = (req.headers["x-nf-client-connection-ip"] as string) || (req.ip as string);
+      const map = this.ips[req.url];
+
+      if (map) {
+         // If an error occurred during the request that was handed to this middleware,
+         // then it should not count against the rate limit.
+
+         const requestData = map.get(ip) || { count: 0, timestamps: [], notFoundCount: 0 };
+         requestData.count--;
+         requestData.timestamps.pop();
+         map.set(ip, requestData);
+      }
+
       if (err instanceof Error) {
          res.status(500).json({
             status: "error",
