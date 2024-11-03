@@ -83,9 +83,9 @@ export class Middleware {
    };
 
    notFound: RequestHandler = (req, res, next) => {
-      res.status(404).json({
-         status: "error",
-         message: "Not found",
+      res.status(404).format({
+         html: () => res.send("<h1>Not Found</h1>"),
+         json: () => res.json({ status: "error", message: "Couldn't find that resource" }),
       });
    };
 }

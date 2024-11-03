@@ -42,5 +42,6 @@ app.use(
 app.use(middleware.removePoweredBy);
 app.use(Router.router);
 app.use(middleware.errors);
+app.use(middleware.notFound);
 
 export default app;
