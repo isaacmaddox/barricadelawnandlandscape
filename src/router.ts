@@ -38,6 +38,12 @@ export class BLLRouter {
          this.csrf,
          this.middleware.rateLimit(1, 10),
          async (req: Request, res: Response, next: NextFunction) => {
+            res.status(503).json({
+               status: "error",
+               message: "Quote requests are currently disabled",
+            });
+            return;
+
             try {
                const success = await this.emails.sendEmail(req.body);
 
