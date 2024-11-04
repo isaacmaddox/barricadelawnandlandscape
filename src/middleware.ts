@@ -12,6 +12,14 @@ interface RouteMap {
 
 export class Middleware {
    private ips: RouteMap = {};
+   private blackListedIps = new Set([
+      "35.203.183.186",
+      "93.183.89.165",
+      "78.31.204.151",
+      "207.228.13.25",
+      "80.85.246.140",
+      "128.199.229.13",
+   ]);
 
    removePoweredBy: RequestHandler = (req, res, next) => {
       res.setHeader("X-Powered-By", "");
@@ -21,8 +29,6 @@ export class Middleware {
    rateLimit(allowedRequests: number, rollingTime: number) {
       return (req: Request, res: Response, next: NextFunction) => {
          const ip = (req.headers["x-nf-client-connection-ip"] as string) || (req.ip as string);
-
-         // if (ip === "::1" || ip === "127.0.0.1") return next();
 
          if (!this.ips[req.url]) {
             this.ips[req.url] = new Map();
@@ -56,6 +62,21 @@ export class Middleware {
    }
 
    errors: ErrorRequestHandler = (err, req, res, next) => {
+      const ip = (req.headers["x-nf-client-connection-ip"] as string) || (req.ip as string);
+      const map = this.ips[req.url];
+
+      if (map) {
+         // If an error occurred during the request that was handed to this middleware,
+         // then it should not count against the rate limit.
+
+         const requestData = map.get(ip) || { count: 0, timestamps: [], notFoundCount: 0 };
+         requestData.timestamps.pop();
+         requestData.count = requestData.timestamps.length;
+         map.set(ip, requestData);
+      }
+
+      console.error(err.message);
+
       if (err instanceof Error) {
          res.status(500).json({
             status: "error",
@@ -72,9 +93,20 @@ export class Middleware {
    };
 
    notFound: RequestHandler = (req, res, next) => {
-      res.status(404).json({
-         status: "error",
-         message: "Not found",
+      res.status(404).format({
+         html: () => res.send("<h1>Not Found</h1>"),
+         json: () => res.json({ status: "error", message: "Couldn't find that resource" }),
       });
+   };
+
+   blackList: RequestHandler = (req, res, next) => {
+      const ip = (req.headers["x-nf-client-connection-ip"] as string) || (req.ip as string);
+
+      if (this.blackListedIps.has(ip)) {
+         res.status(403).json({ status: "error", message: "Forbidden" });
+         return;
+      }
+
+      next();
    };
 }
