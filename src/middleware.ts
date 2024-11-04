@@ -12,6 +12,14 @@ interface RouteMap {
 
 export class Middleware {
    private ips: RouteMap = {};
+   private blackListedIps = new Set([
+      "35.203.183.186",
+      "93.183.89.165",
+      "78.31.204.151",
+      "207.228.13.25",
+      "80.85.246.140",
+      "128.199.229.13",
+   ]);
 
    removePoweredBy: RequestHandler = (req, res, next) => {
       res.setHeader("X-Powered-By", "");
@@ -62,10 +70,12 @@ export class Middleware {
          // then it should not count against the rate limit.
 
          const requestData = map.get(ip) || { count: 0, timestamps: [], notFoundCount: 0 };
-         requestData.count--;
          requestData.timestamps.pop();
+         requestData.count = requestData.timestamps.length;
          map.set(ip, requestData);
       }
+
+      console.error(err.message);
 
       if (err instanceof Error) {
          res.status(500).json({
@@ -87,5 +97,16 @@ export class Middleware {
          html: () => res.send("<h1>Not Found</h1>"),
          json: () => res.json({ status: "error", message: "Couldn't find that resource" }),
       });
+   };
+
+   blackList: RequestHandler = (req, res, next) => {
+      const ip = (req.headers["x-nf-client-connection-ip"] as string) || (req.ip as string);
+
+      if (this.blackListedIps.has(ip)) {
+         res.status(403).json({ status: "error", message: "Forbidden" });
+         return;
+      }
+
+      next();
    };
 }
