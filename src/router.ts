@@ -7,7 +7,6 @@ import { Middleware } from "./middleware";
 export class BLLRouter {
    private faqList: any[];
    private emails = new EmailService();
-   private csrf = csurf({ cookie: true });
    public router: Router;
 
    constructor(private schema: string, private images: string[], private middleware: Middleware) {
@@ -23,7 +22,7 @@ export class BLLRouter {
       this.router.use(cookieParser());
       this.router.use(express.json());
 
-      this.router.get("/", this.csrf, (req, res) => {
+      this.router.get("/", this.middleware.csrf, (req, res) => {
          res.render("home", {
             images: this.images,
             faqSchema: this.schema,
@@ -35,7 +34,7 @@ export class BLLRouter {
 
       this.router.post(
          "/submit",
-         this.csrf,
+         this.middleware.csrf,
          this.middleware.rateLimit(1, 10),
          async (req: Request, res: Response, next: NextFunction) => {
             res.status(503).json({

@@ -1,3 +1,4 @@
+import csurf from "csurf";
 import { ErrorRequestHandler, NextFunction, Request, RequestHandler, Response } from "express";
 
 interface IpMap {
@@ -25,6 +26,8 @@ export class Middleware {
       "195.2.78.89",
       "77.238.225.41",
    ]);
+
+   csrf: RequestHandler = csurf({ cookie: true });
 
    removePoweredBy: RequestHandler = (req, res, next) => {
       res.setHeader("X-Powered-By", "");
