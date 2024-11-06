@@ -42,7 +42,7 @@ app.use(
 app.use(middleware.blackList);
 app.use(middleware.removePoweredBy);
 app.use(Router.router);
-app.use(middleware.errors);
 app.use(middleware.notFound);
+app.use(middleware.errors);
 
 export default app;
