@@ -1,6 +1,5 @@
 import express, { Request, Response, NextFunction, Router } from "express";
 import { EmailService } from "./email.service";
-import csurf from "csurf";
 import cookieParser from "cookie-parser";
 import { Middleware } from "./middleware";
 

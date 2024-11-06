@@ -1,3 +1,7 @@
+import { Resend } from "resend";
+import fs from "fs";
+import { randomUUID } from "crypto";
+
 interface QuoteFormBody {
    from: string;
    email: string;
@@ -12,10 +16,6 @@ interface QuoteFormBody {
    comments: string;
    how: string;
 }
-
-import { Resend } from "resend";
-import fs from "fs";
-import { randomUUID } from "crypto";
 
 const howOptions = {
    "social-media": "Social Media",
