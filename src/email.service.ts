@@ -2,7 +2,7 @@ import { Resend } from "resend";
 import fs from "fs";
 import { randomUUID } from "crypto";
 
-interface QuoteFormBody {
+export interface QuoteFormBody {
    from: string;
    email: string;
    address: string;

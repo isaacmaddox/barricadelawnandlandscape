@@ -1,5 +1,5 @@
 import express, { Request, Response, NextFunction, Router } from "express";
-import { EmailService } from "./email.service";
+import { EmailService, QuoteFormBody } from "./email.service";
 import cookieParser from "cookie-parser";
 import { Middleware } from "./middleware";
 
@@ -36,13 +36,17 @@ export class BLLRouter {
          this.middleware.csrf,
          this.middleware.rateLimit(1, 10),
          async (req: Request, res: Response, next: NextFunction) => {
-            res.status(503).json({
-               status: "error",
-               message: "Quote requests are currently disabled",
-            });
-            return;
-
             try {
+               const body = req.body as QuoteFormBody;
+
+               if (!body.address.match(/^[0-9]/)) {
+                  res.status(400).json({
+                     status: "error",
+                     message: "We couldn't process your form. Please try again.",
+                  });
+                  return;
+               }
+
                const success = await this.emails.sendEmail(req.body);
 
                if (success) {
