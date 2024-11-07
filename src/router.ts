@@ -20,7 +20,6 @@ export class BLLRouter {
 
    init() {
       this.router.use(cookieParser());
-      this.router.use(express.json());
 
       this.router.get("/", this.middleware.csrf, (req, res) => {
          res.render("home", {

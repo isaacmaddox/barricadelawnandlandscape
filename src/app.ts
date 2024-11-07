@@ -41,6 +41,7 @@ app.use(
       ].join(" ");
    })
 );
+app.use(express.json());
 app.use(middleware.blackList);
 app.use(middleware.removePoweredBy);
 app.use(Router.router);
