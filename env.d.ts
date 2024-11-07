@@ -5,5 +5,7 @@ declare namespace NodeJS {
       REQ_TO_EMAIL: string;
       CONF_FROM_EMAIL: string;
       NODE_ENV: "development" | "production";
+      DISCORD_TOKEN: string;
+      DISCORD_ID: string;
    }
 }

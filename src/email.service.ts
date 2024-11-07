@@ -1,4 +1,4 @@
-import { Resend } from "resend";
+import { ErrorResponse, Resend } from "resend";
 import fs from "fs";
 import { randomUUID } from "crypto";
 
@@ -70,7 +70,7 @@ export class EmailService {
       return newBody;
    }
 
-   async sendEmail(body: QuoteFormBody): Promise<boolean> {
+   async sendEmail(body: QuoteFormBody): Promise<{ success?: boolean, error?: ErrorResponse }> {
       const newBody = this.sanitize(body);
 
       const { error } = await this.resend.emails.send({
@@ -85,7 +85,7 @@ export class EmailService {
       });
 
       if (error) {
-         return false;
+         return { error };
       }
 
       await this.resend.emails.send({
@@ -96,6 +96,6 @@ export class EmailService {
          html: this.render("conf", newBody),
       });
 
-      return true;
+      return { success: true };
    }
 }

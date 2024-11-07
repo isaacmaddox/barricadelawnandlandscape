@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@discordjs/rest": "^2.4.0",
     "cookie-parser": "^1.4.6",
     "csurf": "^1.2.2",
     "express": "^4.19.2",
