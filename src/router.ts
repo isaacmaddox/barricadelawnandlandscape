@@ -45,7 +45,6 @@ export class BLLRouter {
                      # Bad Request\n` +
                      `**Address**: ${body.address}\n` +
                      `**IP**: ${req.headers["x-nf-client-connection-ip"]}
-
                      \`\`\`json\n${JSON.stringify(body, null, 2)}\`\`\`
                   `);
 

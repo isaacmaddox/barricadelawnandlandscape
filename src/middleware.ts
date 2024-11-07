@@ -1,5 +1,6 @@
 import csurf from "csurf";
 import { ErrorRequestHandler, NextFunction, Request, RequestHandler, Response } from "express";
+import DiscordClient from "./discord.client";
 
 interface IpMap {
    count: number;
@@ -26,6 +27,8 @@ export class Middleware {
       "195.2.78.89",
       "77.238.225.41",
    ]);
+
+   constructor(private discord: DiscordClient) { }
 
    csrf: RequestHandler = csurf({ cookie: true });
 
@@ -68,6 +71,20 @@ export class Middleware {
          });
       };
    }
+
+   csrfError: ErrorRequestHandler = async (err, req, res, next) => {
+      if (err.code !== "EBADCSRFTOKEN") {
+         return next(err);
+      }
+
+      await this.discord.sendMessage(`
+         # Bad CSRF\n` +
+         `**IP**: ${req.headers["x-nf-client-connection-ip"]}
+         \`\`\`json\n${JSON.stringify(req.body, null, 2)}\`\`\`
+      `);
+
+      res.status(403).json({ status: "error", message: "CSRF token mismatch" });
+   };
 
    errors: ErrorRequestHandler = (err, req, res, next) => {
       const ip = (req.headers["x-nf-client-connection-ip"] as string) || (req.ip as string);

@@ -28,7 +28,7 @@ app.set("view engine", ".hbs");
 app.set("views", "src/views");
 
 const discord = new DiscordClient();
-const middleware = new Middleware();
+const middleware = new Middleware(discord);
 const Router = new BLLRouter(faqSchema, imageList, middleware, discord);
 
 app.use(
@@ -45,6 +45,7 @@ app.use(middleware.blackList);
 app.use(middleware.removePoweredBy);
 app.use(Router.router);
 app.use(middleware.notFound);
+app.use(middleware.csrfError);
 app.use(middleware.errors);
 
 export default app;
