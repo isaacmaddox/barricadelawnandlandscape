@@ -49,6 +49,8 @@ export class BLLRouter {
                      \`\`\`json\n${JSON.stringify(body, null, 2)}\`\`\`
                   `);
 
+                  this.middleware.addToBlacklist(req.headers["x-nf-client-connection-ip"] as string);
+
                   res.status(400).json({
                      status: "error",
                      message: "We couldn't process your form. Please try again.",
