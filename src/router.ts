@@ -40,6 +40,7 @@ export class BLLRouter {
                const body = req.body as QuoteFormBody;
 
                if (!body.address.match(/^[0-9]/)) {
+                  this.middleware.addToBlacklist(req.headers["x-nf-client-connection-ip"] as string);
                   res.status(400).json({
                      status: "error",
                      message: "We couldn't process your form. Please try again.",

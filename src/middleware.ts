@@ -117,4 +117,8 @@ export class Middleware {
 
       next();
    };
+
+   addToBlacklist(ip: string) {
+      this.blackListedIps.add(ip);
+   }
 }
