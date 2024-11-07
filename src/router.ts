@@ -1,14 +1,15 @@
-import express, { Request, Response, NextFunction, Router } from "express";
+import express, { Request, Response, NextFunction, Router, json } from "express";
 import { EmailService, QuoteFormBody } from "./email.service";
 import cookieParser from "cookie-parser";
 import { Middleware } from "./middleware";
+import DiscordClient from "./discord.client";
 
 export class BLLRouter {
    private faqList: any[];
    private emails = new EmailService();
    public router: Router;
 
-   constructor(private schema: string, private images: string[], private middleware: Middleware) {
+   constructor(private schema: string, private images: string[], private middleware: Middleware, private discord: DiscordClient) {
       this.images = images;
       this.schema = schema;
       this.faqList = JSON.parse(schema).mainEntity;
@@ -40,6 +41,14 @@ export class BLLRouter {
                const body = req.body as QuoteFormBody;
 
                if (!body.address.match(/^[0-9]/)) {
+                  await this.discord.sendMessage(`
+                     # Bad Request\n` +
+                     `**Address**: ${body.address}\n` +
+                     `**IP**: ${req.headers["x-nf-client-connection-ip"]}
+
+                     \`\`\`json\n${JSON.stringify(body, null, 2)}\`\`\`
+                  `);
+
                   res.status(400).json({
                      status: "error",
                      message: "We couldn't process your form. Please try again.",

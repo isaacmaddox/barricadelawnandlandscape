@@ -4,6 +4,7 @@ import fs from "fs";
 import { Middleware } from "./middleware";
 import { BLLRouter } from "./router";
 import morgan from "morgan";
+import DiscordClient from "./discord.client";
 const faqSchema = fs.readFileSync("src/views/faqs.json").toString("utf-8");
 const imageList = [
    "AA_truck.jpg",
@@ -26,8 +27,9 @@ app.engine(
 app.set("view engine", ".hbs");
 app.set("views", "src/views");
 
+const discord = new DiscordClient();
 const middleware = new Middleware();
-const Router = new BLLRouter(faqSchema, imageList, middleware);
+const Router = new BLLRouter(faqSchema, imageList, middleware, discord);
 
 app.use(
    morgan(function (tokens, req, res) {
