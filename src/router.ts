@@ -8,6 +8,7 @@ export class BLLRouter {
    private faqList: any[];
    private emails = new EmailService();
    public router: Router;
+   public static requiredFields = ["_csrf", "from", "email", "address", "address2", "city", "state", "zip", "type", "phone", "cantext", "comments", "how"];
 
    constructor(private schema: string, private images: string[], private middleware: Middleware, private discord: DiscordClient) {
       this.images = images;
@@ -38,6 +39,15 @@ export class BLLRouter {
          async (req: Request, res: Response, next: NextFunction) => {
             try {
                const body = req.body as QuoteFormBody;
+
+               for (const key of BLLRouter.requiredFields) {
+                  if (!body[key]) {
+                     res.status(400).json({
+                        status: "error",
+                        message: "Please fill in all required fields.",
+                     });
+                  }
+               }
 
                if (!body.address.match(/^[0-9]/)) {
                   await this.discord.sendMessage(`
