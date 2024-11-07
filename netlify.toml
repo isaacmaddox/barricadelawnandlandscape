@@ -1,5 +1,5 @@
 [functions]
-  external_node_modules = ["cookie-parser", "csurf", "express", "express-handlebars", "morgan", "resend", "serverless-http"]
+  external_node_modules = ["cookie-parser", "csurf", "express", "express-handlebars", "morgan", "resend", "serverless-http", "@discordjs/rest"]
   node_bundler = "esbuild"
   included_files = ["src/**", "email_templates/*"]
 # Necessary because express.static('public') wasn't working as intended when mixing with Netlify
