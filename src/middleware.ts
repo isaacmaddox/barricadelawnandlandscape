@@ -37,6 +37,15 @@ export class Middleware {
       next();
    };
 
+   requireJSON: RequestHandler = (req, res, next) => {
+      if (!req.is("json")) {
+         res.status(400).json({ status: "error", message: "Please send a JSON body" });
+         return;
+      }
+
+      next();
+   };
+
    rateLimit(allowedRequests: number, rollingTime: number) {
       return (req: Request, res: Response, next: NextFunction) => {
          const ip = (req.headers["x-nf-client-connection-ip"] as string) || (req.ip as string);
@@ -77,11 +86,15 @@ export class Middleware {
          return next(err);
       }
 
-      await this.discord.sendMessage(`
-         # Bad CSRF\n` +
-         `**IP**: ${req.headers["x-nf-client-connection-ip"]}
-         \`\`\`json\n${JSON.stringify(req.body, null, 2)}\`\`\`
-      `);
+      try {
+         await this.discord.sendMessage(`
+            # Bad CSRF\n` +
+            `**IP**: ${req.headers["x-nf-client-connection-ip"]}
+            \`\`\`json\n${JSON.stringify(req.body, null, 2)}\`\`\`
+         `);
+      } catch (err) {
+         console.error(err);
+      }
 
       res.status(403).json({ status: "error", message: "CSRF token mismatch" });
    };

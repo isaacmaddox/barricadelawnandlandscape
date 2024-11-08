@@ -35,6 +35,7 @@ export class BLLRouter {
       this.router.post(
          "/submit",
          this.middleware.csrf,
+         this.middleware.requireJSON,
          this.middleware.rateLimit(1, 10),
          async (req: Request, res: Response, next: NextFunction) => {
             try {
