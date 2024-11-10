@@ -89,9 +89,8 @@ export class Middleware {
       try {
          await this.discord.sendMessage(`
             # Bad CSRF\n` +
-            `**IP**: ${req.headers["x-nf-client-connection-ip"]}
-            \`\`\`json\n${JSON.stringify(req.body, null, 2)}\`\`\`
-         `);
+            `**IP**: ${req.headers["x-nf-client-connection-ip"]}`
+         );
       } catch (err) {
          console.error(err);
       }
