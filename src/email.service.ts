@@ -42,6 +42,7 @@ export class EmailService {
          .replace(/ /g, "+")
          .replace(/,/g, "%2C")
          .replace(/<br\/>/g, "+")}`;
+
       const replacements = {
          "{{NAME}}": body.from,
          "{{ADDRESS}}": address,
