@@ -47,7 +47,7 @@ export class Middleware {
    };
 
    rateLimit(allowedRequests: number, rollingTime: number) {
-      return (req: Request, res: Response, next: NextFunction) => {
+      return async (req: Request, res: Response, next: NextFunction) => {
          const ip = (req.headers["x-nf-client-connection-ip"] as string) || (req.ip as string);
 
          if (!this.ips[req.url]) {
@@ -71,6 +71,8 @@ export class Middleware {
             return next();
          }
 
+         await this.discord.sendMessage(`Rate limited IP ${ip}`);
+
          res.status(429).json({
             status: "fail",
             data: {
@@ -87,10 +89,7 @@ export class Middleware {
       }
 
       try {
-         await this.discord.sendMessage(`
-            # Bad CSRF\n` +
-            `**IP**: ${req.headers["x-nf-client-connection-ip"]}`
-         );
+         await this.discord.sendMessage(`Bad CSRF: ${req.headers["x-nf-client-connection-ip"]}`);
       } catch (err) {
          console.error(err);
       }

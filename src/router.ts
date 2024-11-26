@@ -8,7 +8,7 @@ export class BLLRouter {
    private faqList: any[];
    private emails = new EmailService();
    public router: Router;
-   public static requiredFields = ["_csrf", "from", "email", "address", "address2", "city", "state", "zip", "type", "phone", "cantext", "comments", "how"];
+   public static requiredFields = ["_csrf", "from", "email", "address", "city", "state", "zip", "type", "phone", "how"];
 
    constructor(private schema: string, private images: string[], private middleware: Middleware, private discord: DiscordClient) {
       this.images = images;
