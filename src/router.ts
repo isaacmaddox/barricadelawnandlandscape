@@ -1,12 +1,12 @@
-import express, { Request, Response, NextFunction, Router, json } from "express";
+import express, { Request, Response, NextFunction, Router } from "express";
 import { EmailService, QuoteFormBody } from "./email.service";
 import cookieParser from "cookie-parser";
 import { Middleware } from "./middleware";
 import DiscordClient from "./discord.client";
 
 export class BLLRouter {
-   private faqList: any[];
-   private emails = new EmailService();
+   private faqList: unknown[];
+   private emails = new EmailService(this.discord);
    public router: Router;
    public static requiredFields = ["_csrf", "from", "email", "address", "city", "state", "zip", "type", "phone", "how"];
 
@@ -51,13 +51,6 @@ export class BLLRouter {
                }
 
                if (!body.address.match(/^[0-9]/)) {
-                  await this.discord.sendMessage(`
-                     # Bad Request\n` +
-                     `**Address**: ${body.address}\n` +
-                     `**IP**: ${req.headers["x-nf-client-connection-ip"]}
-                     \`\`\`json\n${JSON.stringify(body, null, 2)}\`\`\`
-                  `);
-
                   this.middleware.addToBlacklist(req.headers["x-nf-client-connection-ip"] as string);
 
                   res.status(400).json({

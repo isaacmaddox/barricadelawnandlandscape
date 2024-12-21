@@ -1,6 +1,7 @@
 import { Resend } from "resend";
 import fs from "fs";
 import { randomUUID } from "crypto";
+import DiscordClient from "./discord.client";
 
 export interface QuoteFormBody {
    from: string;
@@ -28,6 +29,8 @@ export class EmailService {
    private resend = new Resend(process.env.RESEND_KEY);
    private requestTemplate = fs.readFileSync("email_templates/quote_request.html").toString("utf-8");
    private confirmTemplate = fs.readFileSync("email_templates/request_confirmation.html").toString("utf-8");
+
+   constructor(private discordClient: DiscordClient) { };
 
    private render(template: "request" | "conf", body: QuoteFormBody): string {
       let address: string;
@@ -62,7 +65,7 @@ export class EmailService {
    }
 
    private sanitize(body: QuoteFormBody): QuoteFormBody {
-      let newBody: QuoteFormBody = body;
+      const newBody: QuoteFormBody = body;
 
       for (const key of Object.keys(body)) {
          newBody[key] = body[key].replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/\n/g, "<br/>");
@@ -86,16 +89,23 @@ export class EmailService {
       });
 
       if (error) {
+         await this.discordClient.sendMessage(`Failed to send email to ${newBody.email}`);
          return false;
       }
 
-      await this.resend.emails.send({
+      const { error: conf_error } = await this.resend.emails.send({
          from: `Barricade Lawn and Landscpae <${process.env.CONF_FROM_EMAIL}>`,
          to: [newBody.email],
          reply_to: process.env.REQ_TO_EMAIL,
          subject: "Confirmation of Request",
          html: this.render("conf", newBody),
       });
+
+      if (conf_error) {
+         await this.discordClient.sendMessage(`Failed to send confirmation email to ${newBody.email}`);
+      } else {
+         await this.discordClient.sendMessage(`Successfully sent emails for quote request from ${newBody.email}`);
+      }
 
       return true;
    }

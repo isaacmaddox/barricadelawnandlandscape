@@ -71,8 +71,6 @@ export class Middleware {
             return next();
          }
 
-         await this.discord.sendMessage(`Rate limited IP ${ip}`);
-
          res.status(429).json({
             status: "fail",
             data: {
@@ -83,21 +81,15 @@ export class Middleware {
       };
    }
 
-   csrfError: ErrorRequestHandler = async (err, req, res, next) => {
+   csrfError: ErrorRequestHandler = async (err, _, res, next) => {
       if (err.code !== "EBADCSRFTOKEN") {
          return next(err);
-      }
-
-      try {
-         await this.discord.sendMessage(`Bad CSRF: ${req.headers["x-nf-client-connection-ip"]}`);
-      } catch (err) {
-         console.error(err);
       }
 
       res.status(403).json({ status: "error", message: "CSRF token mismatch" });
    };
 
-   errors: ErrorRequestHandler = (err, req, res, next) => {
+   errors: ErrorRequestHandler = (err, req, res) => {
       const ip = (req.headers["x-nf-client-connection-ip"] as string) || (req.ip as string);
       const map = this.ips[req.url];
 
@@ -128,7 +120,7 @@ export class Middleware {
       });
    };
 
-   notFound: RequestHandler = (req, res, next) => {
+   notFound: RequestHandler = (_, res) => {
       res.status(404).format({
          html: () => res.send("<h1>Not Found</h1>"),
          json: () => res.json({ status: "error", message: "Couldn't find that resource" }),
