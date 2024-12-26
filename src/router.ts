@@ -6,7 +6,7 @@ import DiscordClient from "./discord.client";
 
 export class BLLRouter {
    private faqList: unknown[];
-   private emails = new EmailService(this.discord);
+   private emails: EmailService;
    public router: Router;
    public static requiredFields = ["_csrf", "from", "email", "address", "city", "state", "zip", "type", "phone", "how"];
 
@@ -16,6 +16,7 @@ export class BLLRouter {
       this.faqList = JSON.parse(schema).mainEntity;
       this.middleware = middleware;
       this.router = express.Router();
+      this.emails = new EmailService(this.discord);
       this.init();
    }
 
