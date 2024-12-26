@@ -89,7 +89,7 @@ export class EmailService {
       });
 
       if (error) {
-         await this.discordClient.sendMessage(`Failed to send email to ${newBody.email}`);
+         await this.discordClient.sendMessage(`Failed to send email for quote request from ${newBody.email}`);
          return false;
       }
 
