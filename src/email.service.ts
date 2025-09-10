@@ -1,112 +1,112 @@
-import { Resend } from "resend";
-import fs from "fs";
 import { randomUUID } from "crypto";
+import fs from "fs";
+import { Resend } from "resend";
 import DiscordClient from "./discord.client";
 
 export interface QuoteFormBody {
-   from: string;
-   email: string;
-   address: string;
-   address2: string;
-   city: string;
-   state: string;
-   zip: string;
-   type: string;
-   phone: string;
-   cantext: string;
-   comments: string;
-   how: string;
+    from: string;
+    email: string;
+    address: string;
+    address2: string;
+    city: string;
+    state: string;
+    zip: string;
+    type: string;
+    phone: string;
+    cantext: string;
+    comments: string;
+    how: string;
 }
 
 const howOptions = {
-   "social-media": "Social Media",
-   referral: "Referral",
-   website: "Website",
-   other: "Other",
+    "social-media": "Social Media",
+    referral: "Referral",
+    website: "Website",
+    other: "Other",
 };
 
 export class EmailService {
-   private resend = new Resend(process.env.RESEND_KEY);
-   private requestTemplate = fs.readFileSync("email_templates/quote_request.html").toString("utf-8");
-   private confirmTemplate = fs.readFileSync("email_templates/request_confirmation.html").toString("utf-8");
+    private resend = new Resend(process.env.RESEND_KEY);
+    private requestTemplate = fs.readFileSync("email_templates/quote_request.html").toString("utf-8");
+    private confirmTemplate = fs.readFileSync("email_templates/request_confirmation.html").toString("utf-8");
 
-   constructor(private discordClient: DiscordClient) { };
+    constructor(private discordClient: DiscordClient) {}
 
-   private render(template: "request" | "conf", body: QuoteFormBody): string {
-      let address: string;
+    private render(template: "request" | "conf", body: QuoteFormBody): string {
+        let address: string;
 
-      if (body.address2 !== "") {
-         address = body.address + "<br/>" + body.address2 + "<br/>" + body.city + ", " + body.state + " " + body.zip;
-      } else {
-         address = body.address + "<br/>" + body.city + ", " + body.state + " " + body.zip;
-      }
+        if (body.address2 !== "") {
+            address = body.address + "<br/>" + body.address2 + "<br/>" + body.city + ", " + body.state + " " + body.zip;
+        } else {
+            address = body.address + "<br/>" + body.city + ", " + body.state + " " + body.zip;
+        }
 
-      const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${address
-         .replace(/ /g, "+")
-         .replace(/,/g, "%2C")
-         .replace(/<br\/>/g, "+")}`;
+        const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${address
+            .replace(/ /g, "+")
+            .replace(/,/g, "%2C")
+            .replace(/<br\/>/g, "+")}`;
 
-      const replacements = {
-         "{{NAME}}": body.from,
-         "{{ADDRESS}}": address,
-         "{{EMAIL}}": body.email,
-         "{{PHONE}}": body.phone,
-         "{{CANTEXT}}": body.cantext ? "can" : "can not",
-         "{{COMMENTS}}": body.comments,
-         "{{HOW}}": howOptions[body.how] ?? "Unknown",
-         "{{TYPE}}": body.type[0].toUpperCase() + body.type.slice(1),
-         "{{MAPS_URL}}": mapsUrl,
-      };
+        const replacements = {
+            "{{NAME}}": body.from,
+            "{{ADDRESS}}": address,
+            "{{EMAIL}}": body.email,
+            "{{PHONE}}": body.phone,
+            "{{CANTEXT}}": body.cantext ? "can" : "can not",
+            "{{COMMENTS}}": body.comments,
+            "{{HOW}}": howOptions[body.how] ?? "Unknown",
+            "{{TYPE}}": body.type[0].toUpperCase() + body.type.slice(1),
+            "{{MAPS_URL}}": mapsUrl,
+        };
 
-      return Object.entries(replacements).reduce(
-         (template, [key, value]) => template.replace(new RegExp(key, "g"), value),
-         template === "request" ? this.requestTemplate : this.confirmTemplate
-      );
-   }
+        return Object.entries(replacements).reduce(
+            (template, [key, value]) => template.replace(new RegExp(key, "g"), value),
+            template === "request" ? this.requestTemplate : this.confirmTemplate
+        );
+    }
 
-   private sanitize(body: QuoteFormBody): QuoteFormBody {
-      const newBody: QuoteFormBody = body;
+    private sanitize(body: QuoteFormBody): QuoteFormBody {
+        const newBody: QuoteFormBody = body;
 
-      for (const key of Object.keys(body)) {
-         newBody[key] = body[key].replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/\n/g, "<br/>");
-      }
+        for (const key of Object.keys(body)) {
+            newBody[key] = body[key].replace(/>/g, "&gt;").replace(/</g, "&lt;").replace(/\n/g, "<br/>");
+        }
 
-      return newBody;
-   }
+        return newBody;
+    }
 
-   async sendEmail(body: QuoteFormBody): Promise<boolean> {
-      const newBody = this.sanitize(body);
+    async sendEmail(body: QuoteFormBody): Promise<boolean> {
+        const newBody = this.sanitize(body);
 
-      const { error } = await this.resend.emails.send({
-         from: `${newBody.from} <${process.env.REQ_FROM_EMAIL}>`,
-         to: [process.env.REQ_TO_EMAIL as string],
-         reply_to: newBody.email,
-         subject: "Quote Request",
-         html: this.render("request", newBody),
-         headers: {
-            "X-Entity-Ref-ID": randomUUID(),
-         },
-      });
+        const { error } = await this.resend.emails.send({
+            from: `${newBody.from} <${process.env.REQ_FROM_EMAIL}>`,
+            to: [process.env.REQ_TO_EMAIL as string],
+            reply_to: newBody.email,
+            subject: "Quote Request",
+            html: this.render("request", newBody),
+            headers: {
+                "X-Entity-Ref-ID": randomUUID(),
+            },
+        });
 
-      if (error) {
-         await this.discordClient.sendMessage(`Failed to send email for quote request from ${newBody.email}`);
-         return false;
-      }
+        if (error) {
+            await this.discordClient.sendMessage(`Failed to send email for quote request from ${newBody.email}`);
+            return false;
+        }
 
-      const { error: conf_error } = await this.resend.emails.send({
-         from: `Barricade Lawn and Landscpae <${process.env.CONF_FROM_EMAIL}>`,
-         to: [newBody.email],
-         reply_to: process.env.REQ_TO_EMAIL,
-         subject: "Confirmation of Request",
-         html: this.render("conf", newBody),
-      });
+        const { error: conf_error } = await this.resend.emails.send({
+            from: `Barricade Lawn and Landscpae <${process.env.CONF_FROM_EMAIL}>`,
+            to: [newBody.email],
+            reply_to: process.env.REQ_TO_EMAIL,
+            subject: "Confirmation of Request",
+            html: this.render("conf", newBody),
+        });
 
-      if (conf_error) {
-         await this.discordClient.sendMessage(`Failed to send confirmation email to ${newBody.email}`);
-      } else {
-         await this.discordClient.sendMessage(`Successfully sent emails for quote request from ${newBody.email}`);
-      }
+        if (conf_error) {
+            await this.discordClient.sendMessage(`Failed to send confirmation email to ${newBody.email}`);
+        } else {
+            await this.discordClient.sendMessage(`Successfully sent emails for quote request from ${newBody.email}`);
+        }
 
-      return true;
-   }
+        return true;
+    }
 }
