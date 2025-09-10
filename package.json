@@ -6,7 +6,6 @@
     "express": "^4.19.2",
     "express-handlebars": "^8.0.1",
     "morgan": "^1.10.0",
-    "netlify-cli": "^17.34.1",
     "resend": "^3.2.0",
     "serverless-http": "^3.2.0"
   },
@@ -18,6 +17,7 @@
     "@types/express": "^5.0.0",
     "@types/morgan": "^1.9.9",
     "globals": "^15.14.0",
+    "netlify-cli": "^23.5.1",
     "typescript-eslint": "^8.18.1"
   }
 }
