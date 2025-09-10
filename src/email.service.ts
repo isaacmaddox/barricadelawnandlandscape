@@ -1,7 +1,6 @@
 import { randomUUID } from "crypto";
 import fs from "fs";
 import { Resend } from "resend";
-import DiscordClient from "./discord.client";
 
 export interface QuoteFormBody {
     from: string;
@@ -30,7 +29,7 @@ export class EmailService {
     private requestTemplate = fs.readFileSync("email_templates/quote_request.html").toString("utf-8");
     private confirmTemplate = fs.readFileSync("email_templates/request_confirmation.html").toString("utf-8");
 
-    constructor(private discordClient: DiscordClient) {}
+    constructor() {}
 
     private render(template: "request" | "conf", body: QuoteFormBody): string {
         let address: string;
@@ -77,7 +76,7 @@ export class EmailService {
     async sendEmail(body: QuoteFormBody): Promise<boolean> {
         const newBody = this.sanitize(body);
 
-        const { error } = await this.resend.emails.send({
+        await this.resend.emails.send({
             from: `${newBody.from} <${process.env.REQ_FROM_EMAIL}>`,
             to: [process.env.REQ_TO_EMAIL as string],
             reply_to: newBody.email,
@@ -88,24 +87,13 @@ export class EmailService {
             },
         });
 
-        if (error) {
-            await this.discordClient.sendMessage(`Failed to send email for quote request from ${newBody.email}`);
-            return false;
-        }
-
-        const { error: conf_error } = await this.resend.emails.send({
+        await this.resend.emails.send({
             from: `Barricade Lawn and Landscpae <${process.env.CONF_FROM_EMAIL}>`,
             to: [newBody.email],
             reply_to: process.env.REQ_TO_EMAIL,
             subject: "Confirmation of Request",
             html: this.render("conf", newBody),
         });
-
-        if (conf_error) {
-            await this.discordClient.sendMessage(`Failed to send confirmation email to ${newBody.email}`);
-        } else {
-            await this.discordClient.sendMessage(`Successfully sent emails for quote request from ${newBody.email}`);
-        }
 
         return true;
     }
